@@ -20,8 +20,8 @@ const Header = () => {
 
   return (
     <header
-      className={` text-green-300 py-3 px-5 fixed w-full z-50 transition-all duration-300 ${
-        isSticky ? "shadow-lg bg-gray-50 " : ""
+      className={` text-green-300 py-6 sm:3 md:3  px-5 fixed w-full  z-50 transition-all duration-300 ${
+        isSticky ? "shadow-lg backdrop-blur-md bg-white/20" : ""
       }`}
       ref={headerRef}
     >
