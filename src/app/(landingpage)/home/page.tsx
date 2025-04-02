@@ -93,10 +93,10 @@ const Home = () => {
               ))}
             </CarouselContent>
             {/* Navigation buttons with custom icons */}
-            <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-gray-700">
+            <CarouselPrevious className="absolute cursor-pointer left-2 top-1/2 -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-gray-700">
               <ChevronLeft className="h-6 w-6 cursor-pointer" />
             </CarouselPrevious>
-            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-gray-700">
+            <CarouselNext className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-gray-700">
               <ChevronRight className="h-6 w-6 cursor-pointer" />
             </CarouselNext>
           </Carousel>
@@ -143,7 +143,7 @@ const Home = () => {
             <CarouselPrevious className="absolute cursor-pointer left-2 top-1/2 -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-gray-700">
               <ChevronLeft className="h-6 w-6 cursor-pointer" />
             </CarouselPrevious>
-            <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-gray-700">
+            <CarouselNext className="absolute cursor-pointer right-2 top-1/2 -translate-y-1/2 bg-black text-white p-2 rounded-full hover:bg-gray-700">
               <ChevronRight className="h-6 w-6 cursor-pointer" />
             </CarouselNext>
           </Carousel>

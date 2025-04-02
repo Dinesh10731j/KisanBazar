@@ -2,8 +2,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { headerRoutes } from "@/utils/routes";
+import KisanBazarLogo from "../../../public/assets/images/KisanBazar_Logo.png";
 const Header = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -27,8 +29,14 @@ const Header = () => {
     >
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
         {/* Logo with Linear Gradient */}
-        <div className="text-3xl font-extrabold bg-gradient-to-r from-[#ff8a00] to-[#e52e71] text-transparent bg-clip-text">
-          KisanBazar
+        <div className="text-3xl font-extrabold bg-gradient-to-r from-[#FFCDB2] to-[#ffcc00] text-transparent bg-clip-text">
+       <Image
+          src={KisanBazarLogo}
+          alt="KisanBazar Logo"
+          width={100}
+          height={100}
+          className="h-10 w-10 mr-2"  
+          />
         </div>
 
         {/* Desktop Navigation */}
