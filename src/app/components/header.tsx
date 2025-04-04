@@ -85,7 +85,7 @@ const Header = () => {
 
           {/* Close Button */}
           <button
-            className="absolute top-4 right-4 text-white"
+            className="absolute top-4 right-4 text-white cursor-pointer"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             <X />
