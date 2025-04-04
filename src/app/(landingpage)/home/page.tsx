@@ -39,7 +39,7 @@ const Home = () => {
             <Button 
               variant={'ghost'}
               className="mt-6 cursor-pointer px-12 py-6 bg-[#FB8C00] hover:bg-[#E65100] text-white text-lg font-semibold rounded-lg transition duration-300 sm:px-8 sm:py-4 sm:text-md md:px-10 md:py-5 md:text-lg lg:px-12 lg:py-6 lg:text-xl">
-              <ShoppingCart className="mr-2 h-6 w-6" strokeWidth={2} />
+              <ShoppingCart className="mr-0 h-6 w-6" strokeWidth={2} />
               Buy Now
             </Button>
           </div>
@@ -125,7 +125,7 @@ const Home = () => {
         </section>
 
         {/* Customer Testimonials */}
-        <section className="py-16 bg-gradient-to-r from-[#ff8a00] to-[#e52e71] text-center">
+        <section className="py-16 bg-gradient-to-r from-[#ff8a00] px-3 to-[#e52e71] text-center">
           <h2 className="text-3xl font-bold mb-6 text-white">What Our Customers Say</h2>
           <Carousel className="relative">
             <CarouselContent className="-ml-2 md:-ml-4">
