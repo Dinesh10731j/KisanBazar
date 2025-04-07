@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { TanstackQueryProvider } from "./tanstack-query-provider";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -28,10 +29,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        
+        <TanstackQueryProvider>
+        {children}
+        </TanstackQueryProvider>
 
         
-        {children}
+      
       </body>
     </html>
   );
