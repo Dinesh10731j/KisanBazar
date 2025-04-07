@@ -1,6 +1,5 @@
 export interface ContactFormValues {
   name: string;
     email: string;
-    message: string;
-    phone: string;  
+    message: string; 
 }

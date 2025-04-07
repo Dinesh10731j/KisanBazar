@@ -4,33 +4,28 @@ import { Phone, MessageCircle, UserCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import Image from "next/image";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 import contactImage from "../../../../public/assets/images/contact_image.jpg";
-
-// Schema for form validation
-const contactSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.string().email("Invalid email"),
-  message: z.string().min(5, "Message must be at least 5 characters"),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
-
+import { contactSchema } from "@/zod_schema/schema";
+import { ContactFormValues } from "@/zod_schema/schema";
+import { UseUserContact } from "@/hooks/userContact";
 const Contact = () => {
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit: SubmitHandler<ContactFormValues> = async (data) => {
-    console.log("Submitted Data:", data);
+
+  const mutation = UseUserContact()
+
+  const onSubmit: SubmitHandler<ContactFormValues> = (data) => {
+mutation.mutate(data)
     reset();
     alert("Message sent successfully!");
   };
@@ -103,10 +98,9 @@ const Contact = () => {
 
               <Button
                 type="submit"
-                disabled={isSubmitting}
                 className="w-full cursor-pointer bg-pink-600 hover:bg-pink-700 text-white py-2 px-4 rounded-xl"
               >
-                {isSubmitting ? "Sending..." : "Send Message"}
+                {mutation.isPending ? "Sending..." : "Send Message"}
               </Button>
             </form>
 
