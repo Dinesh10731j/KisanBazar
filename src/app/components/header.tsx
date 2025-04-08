@@ -1,11 +1,13 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBasket } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { headerRoutes } from "@/utils/routes";
 import KisanBazarLogo from "../../../public/assets/images/KisanBazar_Logo.png";
+import { Button } from "@/components/ui/button";
+
 const Header = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -22,25 +24,25 @@ const Header = () => {
 
   return (
     <header
-      className={` text-green-300 py-6 sm:3 md:3  px-5 fixed w-full  z-50 transition-all duration-300 ${
+      className={`text-green-300 py-6 px-5 fixed w-full z-50 transition-all duration-300 ${
         isSticky ? "shadow-lg backdrop-blur-md bg-white/20" : ""
       }`}
       ref={headerRef}
     >
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
-        {/* Logo with Linear Gradient */}
+        {/* Logo */}
         <div className="text-3xl font-extrabold bg-gradient-to-r from-[#FFCDB2] to-[#ffcc00] text-transparent bg-clip-text">
-       <Image
-          src={KisanBazarLogo}
-          alt="KisanBazar Logo"
-          width={100}
-          height={100}
-          className="h-10 w-10 mr-2"  
+          <Image
+            src={KisanBazarLogo}
+            alt="KisanBazar Logo"
+            width={100}
+            height={100}
+            className="h-10 w-10 mr-2"
           />
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex space-x-8 text-lg">
+        <nav className="hidden lg:flex space-x-6 items-center text-lg">
           {headerRoutes?.map((link) => (
             <Link
               key={link.path}
@@ -52,15 +54,41 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
+
+          {/* 🧺 Basket Icon */}
+          <Link href="/basket" className="relative hover:text-black transition-colors">
+  <ShoppingBasket className="w-6 h-6" />
+  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
+    2
+  </span>
+</Link>
+
+          {/* 🔐 Login Button */}
+          <Link href="/login">
+            <Button variant="outline" className="text-sm text-white cursor-pointer bg-[#FB8C00] hover:bg-[#E65100]">
+              Login
+            </Button>
+          </Link>
         </nav>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="lg:hidden text-white cursor-pointer"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          <Menu />
-        </button>
+        {/* Mobile Basket + Menu */}
+        <div className="flex items-center space-x-4 lg:hidden relative">
+          {/* 🧺 Basket Icon */}
+          <Link href="/basket" className="relative hover:text-black transition-colors">
+  <ShoppingBasket className="w-6 h-6" />
+  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
+    2
+  </span>
+</Link>
+
+          {/* ☰ Hamburger Menu */}
+          <button
+            className="text-white"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <Menu />
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation */}
@@ -82,6 +110,26 @@ const Header = () => {
               {link.name}
             </Link>
           ))}
+
+          {/* 🧺 Basket Icon */}
+          <Link
+            href="/basket"
+            className="text-pink-600 flex items-center space-x-1"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <ShoppingBasket />
+            <span>Basket</span>
+          </Link>
+
+          {/* 🔐 Login Button */}
+          <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+            <Button
+              variant="outline"
+              className="text-sm text-white bg-[#FB8C00] hover:bg-[#E65100] border-white"
+            >
+              Login
+            </Button>
+          </Link>
 
           {/* Close Button */}
           <button

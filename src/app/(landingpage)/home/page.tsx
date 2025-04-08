@@ -29,11 +29,11 @@ const Home = () => {
             className="absolute inset-0 z-0"
           />
           <div className="absolute inset-0 bg-opacity-50 z-10"></div>
-          <div className="relative z-20 text-center text-white px-6">
+          <div className="relative z-20 text-center text-pink-600 px-6">
             <h1 className="text-4xl sm:text-6xl font-extrabold">
               Fresh Produce Direct from Farmers to Your Doorstep!
             </h1>
-            <p className="mt-4 text-lg sm:text-xl">
+            <p className="mt-4 text-lg sm:text-xl text-gray-200">
               Support local farmers & enjoy farm-fresh goods with fair pricing.
             </p>
             <Button 
@@ -51,17 +51,17 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center">
               <Handshake className="text-[#FB8C00] w-12 h-12 mb-4" />
-              <h3 className="text-xl font-semibold">No Middlemen</h3>
+              <h3 className="text-xl font-semibold text-pink-600">No Middlemen</h3>
               <p className="text-gray-600">Get farm-fresh products at great prices!</p>
             </div>
             <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center">
               <Leaf className="text-[#FB8C00] w-12 h-12 mb-4" />
-              <h3 className="text-xl font-semibold">Support Local Farmers</h3>
+              <h3 className="text-xl font-semibold text-pink-600">Support Local Farmers</h3>
               <p className="text-gray-600">Your purchases directly help farmers earn fair prices.</p>
             </div>
             <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center">
               <Truck className="text-[#FB8C00] w-12 h-12 mb-4" />
-              <h3 className="text-xl font-semibold">Direct Delivery</h3>
+              <h3 className="text-xl font-semibold text-pink-600">Direct Delivery</h3>
               <p className="text-gray-600">Fresh products delivered straight to your doorstep.</p>
             </div>
           </div>
@@ -82,7 +82,7 @@ const Home = () => {
                       height={150}
                       className="rounded-md"
                     />
-                    <h3 className="text-xl font-semibold mt-4">{product.product_Name}</h3>
+                    <h3 className="text-xl font-semibold mt-4 text-pink-600">{product.product_Name}</h3>
                     <p className="text-gray-600 text-sm mt-2">{product.product_Description}</p>
                     <p className="text-lg font-bold text-[#E65100] mt-2">Rs. {product.product_Price}</p>
                     <Button className="mt-4 bg-[#FB8C00] hover:bg-[#E65100] text-white px-4 py-2 rounded-lg">
@@ -108,17 +108,17 @@ const Home = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
             <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center text-center">
               <ShoppingCart className="text-[#FB8C00] w-12 h-12 mb-4" />
-              <h3 className="text-xl font-semibold">Choose Your Products</h3>
+              <h3 className="text-xl font-semibold text-pink-600">Choose Your Products</h3>
               <p className="text-gray-600">Select from a wide range of fresh farm products.</p>
             </div>
             <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center text-center">
               <Handshake className="text-[#FB8C00] w-12 h-12 mb-4" />
-              <h3 className="text-xl font-semibold">Place an Order</h3>
+              <h3 className="text-xl font-semibold text-pink-600">Place an Order</h3>
               <p className="text-gray-600">Buy directly from farmers at fair prices.</p>
             </div>
             <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center text-center">
               <Truck className="text-[#FB8C00] w-12 h-12 mb-4" />
-              <h3 className="text-xl font-semibold">Fast Delivery</h3>
+              <h3 className="text-xl font-semibold text-pink-600">Fast Delivery</h3>
               <p className="text-gray-600">Get fresh produce delivered to your doorstep.</p>
             </div>
           </div>
@@ -132,7 +132,7 @@ const Home = () => {
               {customerReviews.map((review, index) => (
                 <CarouselItem key={index} className="pl-2 md:pl-4 basis-1/1 sm:basis-1/2 md:basis-1/3">
                   <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center text-center">
-                    <p className="text-gray-600 text-xl font-semibold mt-2">{review.customerName}</p>
+                    <p className=" text-xl font-semibold mt-2 text-pink-600">{review.customerName}</p>
                     <h3 className="text-xl font-semibold mt-4">{React.createElement(review?.customerImage,{size:120})}</h3>
                     <p className="text-gray-600 text-sm">{review.review}</p>
                   </div>
