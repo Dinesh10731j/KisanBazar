@@ -13,7 +13,6 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
@@ -56,16 +55,22 @@ const Header = () => {
           ))}
 
           {/* 🧺 Basket Icon */}
-          <Link href="/basket" className="relative hover:text-black transition-colors">
-  <ShoppingBasket className="w-6 h-6" />
-  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
-    2
-  </span>
-</Link>
+          <Link
+            href="/basket"
+            className="relative hover:text-black transition-colors"
+          >
+            <ShoppingBasket className="w-6 h-6" />
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
+              2
+            </span>
+          </Link>
 
           {/* 🔐 Login Button */}
           <Link href="/login">
-            <Button variant="outline" className="text-sm text-white cursor-pointer bg-[#FB8C00] hover:bg-[#E65100]">
+            <Button
+              variant="outline"
+              className="text-sm text-white cursor-pointer bg-[#FB8C00] hover:bg-[#E65100]"
+            >
               Login
             </Button>
           </Link>
@@ -74,16 +79,19 @@ const Header = () => {
         {/* Mobile Basket + Menu */}
         <div className="flex items-center space-x-4 lg:hidden relative">
           {/* 🧺 Basket Icon */}
-          <Link href="/basket" className="relative hover:text-black transition-colors">
-  <ShoppingBasket className="w-6 h-6" />
-  <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
-    2
-  </span>
-</Link>
+          <Link
+            href="/basket"
+            className="relative hover:text-black transition-colors"
+          >
+            <ShoppingBasket className="w-6 h-6" />
+            <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
+              2
+            </span>
+          </Link>
 
           {/* ☰ Hamburger Menu */}
           <button
-            className="text-white"
+            className="text-white cursor-pointer"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             <Menu />
