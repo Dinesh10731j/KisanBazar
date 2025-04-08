@@ -29,7 +29,7 @@ const Login = () => {
       <Header />
       <div className="min-h-screen flex flex-col lg:flex-row items-center justify-center bg-gradient-to-r from-[#ff8a00] to-[#e52e71] px-4">
         {/* Wrapper with white background */}
-        <div className="w-full lg:w-2/3 bg-white p-4 rounded-lg shadow-xl flex flex-col lg:flex-row items-center justify-center">
+        <div className="w-full lg:w-2/3 mt-24 md:mt-0 bg-white p-4 rounded-lg shadow-xl flex flex-col lg:flex-row items-center justify-center">
           {/* Image */}
           <div className="w-full lg:w-1/2 mb-10 lg:mb-0">
             <Image
@@ -64,7 +64,9 @@ const Login = () => {
                   />
                 </div>
                 {errors.email && (
-                  <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
 
@@ -83,7 +85,9 @@ const Login = () => {
                   />
                 </div>
                 {errors.password && (
-                  <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
+                  <p className="text-sm text-red-500 mt-1">
+                    {errors.password.message}
+                  </p>
                 )}
               </div>
 
@@ -99,14 +103,17 @@ const Login = () => {
             {/* Register Link */}
             <p className="text-center text-sm text-gray-500 mt-6">
               Don’t have an account?{" "}
-              <Link href="/register" className="text-[#FB8C00] hover:underline">
+              <Link href="/signup" className="text-[#FB8C00] hover:underline">
                 Register
               </Link>
             </p>
 
             {/* Forgot Password Link */}
             <p className="text-center text-sm text-gray-500 mt-2">
-              <Link href="/forgot-password" className="text-[#FB8C00] hover:underline">
+              <Link
+                href="/forgot-password"
+                className="text-[#FB8C00] hover:underline"
+              >
                 Forgot Password?
               </Link>
             </p>
