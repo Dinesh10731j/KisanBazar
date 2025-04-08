@@ -125,7 +125,7 @@ const Header = () => {
           <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
             <Button
               variant="outline"
-              className="text-sm text-white bg-[#FB8C00] hover:bg-[#E65100] border-white"
+              className="text-sm cursor-pointer text-white bg-[#FB8C00] hover:bg-[#E65100] border-white"
             >
               Login
             </Button>
