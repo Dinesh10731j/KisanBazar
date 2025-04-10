@@ -7,10 +7,19 @@ const {login} = Endpoints;
 
 
 const useLogin = async (data:LoginFormValues)=>{
-    const response = await axiosInstance.post(login, data);
-    return response.data;
-}
 
+    try{
+        const response = await axiosInstance.post(login, data);
+        return response.data;
+    }catch(error:unknown){
+        if(error instanceof Error){
+            throw new Error(error.message);
+        }else{
+            throw new Error("Something went wrong");
+        }
+  
+}
+}
 
 export const UseUserLogin = ()=>{
     return useMutation ({
