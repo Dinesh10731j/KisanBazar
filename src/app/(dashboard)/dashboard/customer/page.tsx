@@ -1,8 +1,14 @@
 import React from 'react'
-
+import CustomerDashBoardClient from '@/app/components/CustomerDashBoardClient';
+export const dynamic = "force-dynamic";
 const Customer = () => {
   return (
-    <div>Customer</div>
+
+ <CustomerDashBoardClient/>
+ 
+   
+   
+    
   )
 }
 

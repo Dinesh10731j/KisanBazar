@@ -1,9 +1,14 @@
-import React from 'react'
 
-const Admin = () => {
+"use client";
+export const dynamic = "force-dynamic";
+import AdminDashboardClient from "@/app/components/AdminDashboardClient";
+
+const AdminDashboard = () => {
   return (
-    <div>Admin</div>
-  )
-}
+    <div>
+      <AdminDashboardClient />
+    </div>
+  );
+};
 
-export default Admin
+export default AdminDashboard;
