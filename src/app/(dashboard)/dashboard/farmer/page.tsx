@@ -1,5 +1,4 @@
-import React from 'react'
-export const dynamic = "force-dynamic";
+import React from 'react';
 import FarmerDashboardClient from '@/app/components/FarmerDashboardClient';
 const Farmer = () => {
   return (

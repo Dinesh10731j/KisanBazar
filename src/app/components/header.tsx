@@ -14,11 +14,13 @@ const Header = () => {
   const [isSticky, setIsSticky] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll,{signal});
+    return () =>controller.abort();
   }, []);
 
   return (
