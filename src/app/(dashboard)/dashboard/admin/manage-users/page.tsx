@@ -31,7 +31,7 @@ const ManageUsers = () => {
   });
 
   return (
-    <div className="p-4 md:p-6 lg:p-10 space-y-6">
+    <div className="px-4 py-4 md:px-6 lg:px-10 max-w-full overflow-hidden">
       <Card>
         <CardHeader className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <CardTitle className="text-xl">Manage Users</CardTitle>
@@ -44,7 +44,7 @@ const ManageUsers = () => {
             />
             <Select value={filterRole} onValueChange={(value) => setFilterRole(value)}>
               <SelectTrigger className="w-full sm:w-40">
-                <SelectValue />
+                <SelectValue placeholder="Filter by role" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All</SelectItem>
@@ -55,8 +55,9 @@ const ManageUsers = () => {
             </Select>
           </div>
         </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
+
+        <CardContent className="overflow-x-auto">
+          <div className="min-w-[200px] md:min-w-full">
             <table className="w-full text-sm text-left border">
               <thead className="bg-gray-100">
                 <tr>
