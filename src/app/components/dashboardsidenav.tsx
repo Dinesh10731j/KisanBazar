@@ -1,52 +1,55 @@
 "use client";
-import React, { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { dashboardRoutes } from '@/utils/routes';
-import { SidebarProps } from '@/utils/types';
-const DashboardSidebar = ({ role }: SidebarProps) => {
-  const pathname = usePathname();
+
+import React, { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { dashboardRoutes } from "@/utils/routes";
+import { SidebarProps } from "@/utils/types";
+import { Menu,X } from "lucide-react";
+const DashboardSidenav: React.FC<SidebarProps> = ({ role }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+  const pathname = usePathname();
   const items = dashboardRoutes[role] || [];
+  const toggleSidebar = () => setIsOpen(!isOpen);
 
   return (
-    <div>
-      {/* Mobile Sidebar Toggle */}
-      <div className="md:hidden p-4 flex justify-between items-center bg-green-600 text-white">
-        <h1 className="text-xl font-bold">KisanBazaar</h1>
-        <button onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-
+    <div className="flex">
       {/* Sidebar */}
       <div
-        className={`fixed z-30 top-0 left-0 h-full bg-green-100 shadow-md transition-all duration-300
-        ${isOpen ? "w-64" : "w-0"} md:w-64 md:static`}
+        className={`${
+          isOpen ? "w-64" : "w-20"
+        } bg-[#1E88E5] text-gray-100 min-h-screen transition-all duration-300`}
       >
-        <div className="p-4 font-bold text-xl text-green-800 hidden md:block">
-          KisanBazaar
+     
+        <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
+          <Link href={"/"}>
+            <h1 className="text-xl font-bold">{isOpen ? "KisanBazaar" : "KB"}</h1>
+          </Link>
+          <button onClick={toggleSidebar} className="text-white cursor-pointer">
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
 
         {/* Sidebar Links */}
-        <ul className="p-4 space-y-2">
+        <nav className="mt-5 space-y-4">
           {items.map((item, index) => (
-            <li key={index}>
-              <Link
-                href={item.path}
-                
-                className={` ${pathname === item.path ? 'bg-green-300 text-green-900' : 'hover:bg-green-200 text-green-900'} block px-4 py-2 rounded hover:bg-green-300 text-green-900 font-medium`}
-              >
-                {item.label}
-              </Link>
-            </li>
+            <Link
+              key={index}
+              href={item.path}
+              className={`flex items-center space-x-3 px-4 py-2 hover:bg-gray-700 transition rounded-md ${
+                pathname === item.path ? "bg-gray-700" : ""
+              }`}
+            >
+              {React.createElement(item.icon, { size: 20 })}
+              {isOpen && <span>{item.label}</span>}
+            </Link>
           ))}
-        </ul>
+        </nav>
       </div>
+
+     
     </div>
   );
 };
 
-export default DashboardSidebar;
+export default DashboardSidenav;
