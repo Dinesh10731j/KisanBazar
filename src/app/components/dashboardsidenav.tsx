@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { dashboardRoutes } from "@/utils/routes";
@@ -9,16 +9,41 @@ import { Menu,X } from "lucide-react";
 const DashboardSidenav: React.FC<SidebarProps> = ({ role }) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const clickOutSideRef = useRef<HTMLDivElement>(null)
   const items = dashboardRoutes[role] || [];
   const toggleSidebar = () => setIsOpen(!isOpen);
+
+
+  useEffect(()=>{
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const handleClickoutside = (event:MouseEvent)=>{
+if(clickOutSideRef.current && 
+  !clickOutSideRef.current.contains(event.target as Node)
+){
+  setIsOpen(false);
+}
+    }
+
+
+    document.addEventListener("mousedown",handleClickoutside,{signal})
+
+
+    return ()=>controller.abort();
+
+  },[])
 
   return (
     <div className="flex">
       {/* Sidebar */}
       <div
+      ref={clickOutSideRef}
         className={`${
           isOpen ? "w-64" : "w-20"
         } bg-[#1E88E5] text-gray-100 min-h-screen transition-all duration-300`}
+        
       >
      
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-700">
