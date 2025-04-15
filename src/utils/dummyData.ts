@@ -102,3 +102,62 @@ export const products = [
     
 
     ]
+
+
+    export const orderTrendData = [
+        { date: "2025-04-01", orders: 45 },
+        { date: "2025-04-02", orders: 60 },
+        { date: "2025-04-03", orders: 35 },
+        { date: "2025-04-04", orders: 80 },
+        { date: "2025-04-05", orders: 70 },
+        { date: "2025-04-06", orders: 90 },
+        { date: "2025-04-07", orders: 100 },
+      ];
+      export const categoryDistributionData = [
+        { category: "Vegetables", orders: 120 },
+        { category: "Fruits", orders: 90 },
+        { category: "Grains", orders: 60 },
+        { category: "Dairy", orders: 30 },
+        { category: "Others", orders: 20 },
+      ];
+      export const keyMetrics = [
+        { title: "Total Farmers", value: 1200 },
+        { title: "Total Orders", value: 4500 },
+        { title: "Revenue", value: "NPR 5,40,000" },
+        { title: "Customers", value: 3000 },
+        { title: "Products", value: 950 },
+        { title: "Delivered Orders", value: 4200 },
+      ];
+      export const usersData = [
+        {
+          id: "1",
+          name: "Ramesh Thapa",
+          email: "ramesh.farmer@example.com",
+          role: "farmer",
+        },
+        {
+          id: "2",
+          name: "Sita Sharma",
+          email: "sita.customer@example.com",
+          role: "customer",
+        },
+        {
+          id: "3",
+          name: "Ganesh Koirala",
+          email: "ganesh.farmer@example.com",
+          role: "farmer",
+        },
+        {
+          id: "4",
+          name: "Anita Gurung",
+          email: "anita.customer@example.com",
+          role: "customer",
+        },
+        {
+          id: "5",
+          name: "Bikash Mahato",
+          email: "bikash.farmer@example.com",
+          role: "farmer",
+        },
+      ];
+      

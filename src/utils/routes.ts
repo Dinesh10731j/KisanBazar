@@ -10,7 +10,8 @@ export const headerRoutes =[
 
   export const dashboardRoutes = {
     admin: [
-      { label: "Dashboard", path: "/dashboard/admin/overview" },
+      { label: "Dashboard", path: "/dashboard/admin" },
+      {label:"Overview",path:"/dashboard/admin/overview"},
       { label: "Manage Users", path: "/dashboard/admin/manage-users" },
       { label: "Orders", path: "/dashboard/admin/orders" },
       { label: "Settings", path: "/dashboard/admin/settings" },
