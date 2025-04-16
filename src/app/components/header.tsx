@@ -7,12 +7,14 @@ import { usePathname } from "next/navigation";
 import { headerRoutes } from "@/utils/routes";
 import KisanBazarLogo from "../../../public/assets/images/KisanBazar_Logo.png";
 import { Button } from "@/components/ui/button";
-
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store/store";
 const Header = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const items = useSelector((state:RootState)=>state.cart.cart);
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -63,7 +65,7 @@ const Header = () => {
           >
             <ShoppingBasket className="w-6 h-6" />
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
-              2
+              {items.length}
             </span>
           </Link>
 
@@ -87,7 +89,7 @@ const Header = () => {
           >
             <ShoppingBasket className="w-6 h-6" />
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
-              2
+              {items.length}
             </span>
           </Link>
 

@@ -1,3 +1,4 @@
+import { StaticImageData } from "next/image";
 export interface ContactFormValues {
   name: string;
     email: string;
@@ -18,4 +19,14 @@ export interface SignupFormValues {
 
 export interface SidebarProps {
   role: "admin" | "farmer" | "user"; 
+}
+
+
+export interface CartItem{
+  id:number,
+  product_Name: string;
+  product_Image: StaticImageData;
+  product_Price: number;
+  product_Description: string;
+  quantity:number
 }

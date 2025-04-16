@@ -1,9 +1,9 @@
-import Home from "./(landingpage)/home/page";
+
+import App from "./components/App";
 export default function Page() {
   return (
    <>
-
-<Home/>
+<App/>
    </>
   );
 }
