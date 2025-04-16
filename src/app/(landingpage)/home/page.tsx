@@ -22,7 +22,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { products, customerReviews } from "@/utils/dummyData";
-import { CartItem } from "@/utils/types";
+import { CartItems } from "@/utils/types";
 import {useAppDispatch} from '@/lib/hooks'
 import {addToCart} from "@/lib/store/slices/cartSlice";
 
@@ -30,7 +30,7 @@ const Home = () => {
 
   const dispatch = useAppDispatch()
 
-  const handleAddToCart = (product:CartItem)=>{
+  const handleAddToCart = (product:CartItems)=>{
     dispatch(addToCart(product))
   }
   return (

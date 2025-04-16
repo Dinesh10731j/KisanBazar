@@ -3,12 +3,12 @@ import { useRef } from 'react'
 import { Provider } from 'react-redux'
 import { makeStore, AppStore } from '../lib/store/store';
 import { addToCart } from '@/lib/store/slices/cartSlice';
-import { CartItem } from '@/utils/types';
+import { CartItems } from '@/utils/types';
 export default function StoreProvider({
   items,
   children,
 }: {
-  items: CartItem[]; 
+  items: CartItems[]; 
   children: React.ReactNode;
 }) {
   const storeRef = useRef<AppStore>(undefined)

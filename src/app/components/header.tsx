@@ -60,7 +60,7 @@ const Header = () => {
 
           {/* 🧺 Basket Icon */}
           <Link
-            href="/basket"
+            href="/cart"
             className="relative hover:text-black transition-colors"
           >
             <ShoppingBasket className="w-6 h-6" />
@@ -84,7 +84,7 @@ const Header = () => {
         <div className="flex items-center space-x-4 lg:hidden relative">
           {/* 🧺 Basket Icon */}
           <Link
-            href="/basket"
+            href="/cart"
             className="relative hover:text-black transition-colors"
           >
             <ShoppingBasket className="w-6 h-6" />
@@ -125,7 +125,7 @@ const Header = () => {
 
           {/* 🧺 Basket Icon */}
           <Link
-            href="/basket"
+            href="/cart"
             className="text-pink-600 flex items-center space-x-1"
             onClick={() => setIsMobileMenuOpen(false)}
           >
