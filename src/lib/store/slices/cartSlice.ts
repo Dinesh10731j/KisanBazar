@@ -1,9 +1,9 @@
 "use client"
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { CartItem } from "@/utils/types";
+import { CartItems } from "@/utils/types";
 
 type CartState = {
-  cart: CartItem[];
+  cart: CartItems[];
 };
 
 const initialState: CartState = {
@@ -14,7 +14,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<CartItem>) => {
+    addToCart: (state, action: PayloadAction<CartItems>) => {
       const itemIndex = state.cart.findIndex(item => item.id === action.payload.id);
 
       if (itemIndex !== -1) {
@@ -23,8 +23,12 @@ const cartSlice = createSlice({
         state.cart.push(action.payload);
       }
     },
+
+    removeCart:(state,action:PayloadAction<number>)=>{
+      state.cart = state.cart.filter((item) => item.id !== action.payload);
+    }
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart,removeCart } = cartSlice.actions;
 export default cartSlice.reducer;

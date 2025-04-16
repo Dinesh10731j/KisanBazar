@@ -22,7 +22,7 @@ export interface SidebarProps {
 }
 
 
-export interface CartItem{
+export interface CartItems{
   id:number,
   product_Name: string;
   product_Image: StaticImageData;

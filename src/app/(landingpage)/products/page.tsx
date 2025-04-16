@@ -7,14 +7,25 @@ import Footer from "@/app/components/footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Grid3X3, List, XCircle } from "lucide-react"; 
+import { useDispatch} from "react-redux";
+import { addToCart } from "@/lib/store/slices/cartSlice";
+import { CartItems } from "@/utils/types";
 
 const Products = () => {
   const [layout, setLayout] = useState("grid");
   const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
 
   const filteredProducts = products.filter((product) =>
     product.product_Name.toLowerCase().includes(search.toLowerCase())
   );
+
+
+  const handleAddToCart = (items:CartItems)=>{
+
+    dispatch(addToCart(items));
+
+  }
 
   return (
     <>
@@ -76,8 +87,10 @@ const Products = () => {
                     <h2 className="text-xl font-semibold text-gray-800">{product.product_Name}</h2>
                     <p className="text-green-700 font-medium">NPR {product.product_Price}</p>
                     <p className="text-sm text-gray-600 my-2">{product.product_Description}</p>
-                    <Button className="mt-2 bg-green-700 hover:bg-green-800 text-white">
-                      Buy Now
+                    <Button className="mt-2 bg-green-700 cursor-pointer hover:bg-green-800 text-white" 
+                    onClick={()=>handleAddToCart(product)}
+                    >
+                      Add to cart
                     </Button>
                   </div>
                 </div>
