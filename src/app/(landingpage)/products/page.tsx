@@ -71,7 +71,7 @@ const Products = () => {
                   : "space-y-7 space-x-5"
               }`}
             >
-              {filteredProducts.map((product) => (
+              {filteredProducts.map((product:CartItems) => (
                 <div
                   key={product.product_Price}
                   className="bg-white shadow rounded-2xl p-4 flex flex-col md:flex-row items-center transition hover:shadow-lg"

@@ -11,7 +11,7 @@ const protectedRoutes = [
 ];
 
 export const middleware = (request: NextRequest) => {
-  const token = request.cookies.get("token");
+  const token = request.cookies.get("access_token");
 
   if (
     !token &&
