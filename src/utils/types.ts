@@ -30,3 +30,23 @@ export interface CartItems{
   product_Description: string;
   quantity:number
 }
+
+
+
+export interface SignupResponse  {
+  access_token: string;
+  refresh_token: string;
+};
+
+
+export interface LoginResponse {
+  access_token: string;
+  refresh_token: string;
+}
+
+
+
+export interface ContactResponse {
+  message:string,
+  error:string,
+}

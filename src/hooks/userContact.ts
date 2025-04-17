@@ -3,24 +3,25 @@ import { Endpoints } from "@/api/endpoints";
 const {contact} = Endpoints
 import {useMutation} from "@tanstack/react-query";
 import { ContactFormValues } from "@/utils/types";
+import { ContactResponse } from "@/utils/types";
 
-const useContact = async (data:ContactFormValues) => {
+const useContact = async (data:ContactFormValues):Promise<ContactResponse> => {
   try{
-    const response = await axiosInstance.post(contact, data);
+    const response = await axiosInstance.post<ContactResponse>(contact, data);
     return response.data; 
-  }catch(error:unknown){
+  }catch(error){
     if(error instanceof Error){
       throw new Error(error.message);
-    }else{
+    }
       throw new Error("Something went wrong");
     }
     
   }
-}
+
 
 
   export const UseUserContact = ()=>{
-    return useMutation({
+    return useMutation<ContactResponse,Error,ContactFormValues>({
         mutationKey:['contact'],
         mutationFn:useContact
         
