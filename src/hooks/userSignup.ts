@@ -24,7 +24,6 @@ export const UseUserSignup = () => {
     mutationFn: userSignup,
     onSuccess: (data) => {
       try {
-        // Set tokens in cookies securely
         Cookies.set("access_token", data.access_token, {
           secure: true,
           sameSite: "Strict",
