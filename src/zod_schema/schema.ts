@@ -33,8 +33,21 @@ export const signupSchema = z.object({
       "Password must contain at least one uppercase letter, one lowercase letter, and one special character"
     ),
   });
+  //Schema for adminSetting form validation
+  export const adminSettingSchema = z.object({
+    adminName: z.string().min(1, 'Name is required'),
+    email: z.string().min(1,"Email is required").email('Invalid email'),
+    password: z.string().min(10, 'Password is required') .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=<>?{}[\]~])/,
+      "Password must contain at least one uppercase letter, one lowercase letter, and one special character"
+    ),
+  });
+  
+
+  
 
 
 export type ContactFormValues = z.infer<typeof contactSchema>;
 export type LoginFormValues = z.infer<typeof loginSchema>;
 export type SignupFormValues = z.infer<typeof signupSchema>;
+export type SettingsFormData = z.infer<typeof adminSettingSchema>;
