@@ -5,7 +5,7 @@ export type Role = 'admin' | 'farmer' | 'user';
 export function UseUserRole(): Role {
   if (typeof window === 'undefined') {
 
-    return 'admin';
+    return 'farmer';
   }
 
   const storedRole = Cookies.get('role') as Role | undefined;
@@ -13,7 +13,7 @@ export function UseUserRole(): Role {
   if (storedRole === 'admin' || storedRole === 'farmer' || storedRole === 'user') {
     return storedRole;
   } else {
-    Cookies.set('role', 'admin');
-    return 'admin';
+    Cookies.set('role', 'farmer');
+    return 'farmer';
   }
 }

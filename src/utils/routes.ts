@@ -32,10 +32,11 @@ export const headerRoutes =[
       { label: "Settings", path: "/dashboard/admin/settings", icon: Settings },
     ],
     farmer: [
-      { label: "My Products", path: "/farmer/products", icon: Package },
-      { label: "Add Product", path: "/farmer/add", icon: PlusCircle },
-      { label: "Sales", path: "/farmer/sales", icon: LineChart },
-      { label: "Profile", path: "/farmer/profile", icon: User },
+      { label: "Dashboard", path: "/dashboard/farmer", icon: LayoutDashboard },
+      { label: "My Products", path: "/dashboard/farmer/products", icon: Package },
+      { label: "Add Product", path: "/dashboard/farmer/addproducts", icon: PlusCircle },
+      { label: "Sales", path: "/dashboard/farmer/sales", icon: LineChart },
+      { label: "Profile", path: "/dashboard/farmer/profile", icon: User },
     ],
     user: [
       { label: "Home", path: "/user/home", icon: Home },
