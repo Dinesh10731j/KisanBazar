@@ -167,3 +167,34 @@ export const products = [
         },
       ];
       
+
+
+      export const salesProducts = [
+        { id: 1, name: 'Tomatoes', price: 'Rs. 200', quantity: '30kg', status: 'Listed' },
+        { id: 2, name: 'Cabbage', price: 'Rs. 120', quantity: '20kg', status: 'Pending' },
+      ];
+      
+      export const salesData = [
+        { name: 'Mon', value: 3000 },
+        { name: 'Tue', value: 2000 },
+        { name: 'Wed', value: 2780 },
+        { name: 'Thu', value: 1890 },
+        { name: 'Fri', value: 2390 },
+        { name: 'Sat', value: 3490 },
+      ];
+      
+      export const statusData = [
+        { name: 'Listed', value: 1 },
+        { name: 'Pending', value: 1 },
+      ];
+      
+      export const COLORS = ['#22c55e', '#facc15'];
+
+
+
+      export const sampleProducts = [
+        { id: 1, name: 'Tomatoes', price: 'Rs. 200', quantity: '30kg' },
+        { id: 2, name: 'Cabbage', price: 'Rs. 120', quantity: '20kg' },
+        { id: 3, name: 'Potatoes', price: 'Rs. 80', quantity: '50kg' },
+      ];
+      
