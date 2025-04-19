@@ -39,10 +39,10 @@ export const headerRoutes =[
       { label: "Profile", path: "/dashboard/farmer/profile", icon: User },
     ],
     user: [
-      { label: "Home", path: "/user/home", icon: Home },
-      { label: "Shop", path: "/user/shop", icon: Store },
-      { label: "Cart", path: "/user/cart", icon: ShoppingBag },
-      { label: "Orders", path: "/user/orders", icon: ShoppingCart },
+      { label: "Home", path: "/dashboard/customer", icon: Home },
+      { label: "Shop", path: "/dashboard/customer/shop", icon: Store },
+      { label: "Cart", path: "/dashboard/customer/cart", icon: ShoppingBag },
+      { label: "Orders", path: "/dashboard/customer/orders", icon: ShoppingCart },
     ],
   };
   
