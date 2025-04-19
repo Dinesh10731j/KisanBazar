@@ -1,9 +1,9 @@
 import React from 'react'
-import CustomerDashBoardClient from '@/app/components/CustomerDashBoardClient';
+import CustomerDashboard from '@/app/components/CustomerDashBoardClient'
 const Customer = () => {
   return (
 
- <CustomerDashBoardClient/>
+ <CustomerDashboard/>
  
    
    
