@@ -13,7 +13,7 @@ const Shop: React.FC = () => {
   const dispatch = useDispatch();
   const handleAddToCart = (product: Product) => {
     dispatch(addToCart(product));
-    alert("Product added to cart successfully!");
+    alert(`Product added to cart successfully ${product.product_Name}`);
   };
 
 
@@ -37,7 +37,7 @@ const Shop: React.FC = () => {
               onClick={() => handleAddToCart(product)}
               className="mt-4 w-full cursor-pointer bg-green-600 hover:bg-green-700 text-white py-2 rounded"
             >
-              Buy Now
+              Add to Cart
             </Button>
           </div>
         ))}

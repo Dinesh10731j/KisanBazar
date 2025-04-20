@@ -11,7 +11,7 @@ export const products:Product[] = [
     product_Image: tomatoImage,
     product_Price: 20,
     product_Description: "Fresh and juicy tomatoes from local farms.",
-    quantity:20,
+    quantity:1,
 
   },
  
@@ -21,7 +21,7 @@ export const products:Product[] = [
         product_Image: onionImage,
         product_Price: 10,
         product_Description: "Fresh onions with a rich flavor, perfect for cooking.",
-        quantity:40,
+        quantity:1,
     },
  
     {
@@ -30,7 +30,7 @@ export const products:Product[] = [
         product_Image: spinachImage,
         product_Price: 22,
         product_Description: "Organic spinach, rich in iron and vitamins.",
-        quantity:60
+        quantity:1
     },
     
  
