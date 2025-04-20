@@ -3,7 +3,8 @@ import tomatoImage from "../../public/assets/images/fresh-red-tomatoes.jpg";
 import onionImage from "../../public/assets/images/onion.jpg";
 import spinachImage from "../../public/assets/images/spinach.jpg";
 import {UserCircle} from "lucide-react"
-export const products = [
+import { Product } from "./types";
+export const products:Product[] = [
   {
     id:1,
     product_Name: "Tomato",
