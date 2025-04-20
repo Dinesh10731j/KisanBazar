@@ -1,4 +1,5 @@
 import { StaticImageData } from "next/image";
+
 export interface ContactFormValues {
   name: string;
     email: string;
@@ -50,3 +51,13 @@ export interface ContactResponse {
   message:string,
   error:string,
 }
+
+export interface Product {
+  id: number;
+  product_Name: string;
+  product_Image: StaticImageData;
+  product_Price: number;
+  product_Description: string;
+  quantity:number
+}
+
