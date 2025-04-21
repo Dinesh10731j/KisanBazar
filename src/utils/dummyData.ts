@@ -199,3 +199,25 @@ export const products:Product[] = [
         { id: 3, name: 'Potatoes', price: 'Rs. 80', quantity: '50kg' },
       ];
       
+
+
+      export const orders = [
+        {
+          id: 'ORD-001',
+          date: '2025-04-18',
+          status: 'Delivered',
+          amount: 'NPR 2,500',
+        },
+        {
+          id: 'ORD-002',
+          date: '2025-04-17',
+          status: 'Pending',
+          amount: 'NPR 1,200',
+        },
+        {
+          id: 'ORD-003',
+          date: '2025-04-15',
+          status: 'Cancelled',
+          amount: 'NPR 3,000',
+        },
+      ];
