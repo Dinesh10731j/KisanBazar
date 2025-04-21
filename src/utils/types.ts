@@ -61,3 +61,11 @@ export interface Product {
   quantity:number
 }
 
+
+export interface Order{
+  id:string,
+  date:string,
+  status:string,
+  amount:string
+}
+

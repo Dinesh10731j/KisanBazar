@@ -56,6 +56,7 @@ const Cart = () => {
                       <Button
                         size="icon"
                         variant="outline"
+                        className='cursor-pointer'
                         onClick={() => handleDecrease(item.id)}
                       >
                         <Minus className="w-4 h-4 cursor-pointer" />
@@ -64,16 +65,17 @@ const Cart = () => {
                       <Button
                         size="icon"
                         variant="outline"
+                        className='cursor-pointer'
                         onClick={() => handleIncrease(item.id)}
                       >
-                        <Plus className="w-4 h-4 cursor-pointer" />
+                        <Plus className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
                 </div>
                 <Button
                   variant="ghost"
-                  className="mt-2 sm:mt-0"
+                  className="mt-2 sm:mt-0 cursor-pointer"
                   onClick={() => handleRemove(item.id)}
                 >
                   <Trash2 className="w-5 h-5 text-red-500" />
@@ -95,7 +97,7 @@ const Cart = () => {
                 <span>Total Price</span>
                 <span>NPR {totalPrice}</span>
               </div>
-              <Button className="w-full bg-green-600 hover:bg-green-700 text-white mt-2">
+              <Button className="w-full cursor-pointer bg-green-600 hover:bg-green-700 text-white mt-2">
                 Proceed to Checkout
               </Button>
             </CardContent>

@@ -31,7 +31,7 @@ const Shop: React.FC = () => {
               className="w-full h-40 object-cover rounded-md mb-4"
             />
             <h2 className="text-lg font-semibold text-gray-800">{product.product_Name}</h2>
-            <p className="text-green-600">{product.product_Name}</p>
+            <p className="text-green-600">NPR.{product.product_Price}</p>
             <Button
               variant={'ghost'}
               onClick={() => handleAddToCart(product)}
