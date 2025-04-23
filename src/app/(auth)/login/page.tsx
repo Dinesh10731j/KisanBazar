@@ -12,6 +12,7 @@ import Footer from "@/app/components/footer";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { UseUserLogin } from "@/hooks/userLogin";
+import { useRouter } from "next/navigation";
 const Login = () => {
   const {
     register,
@@ -23,8 +24,10 @@ const Login = () => {
 
 
   const loginMutation = UseUserLogin();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
+
     loginMutation.mutate(data,{
       onSuccess: (data) => {
         try {
@@ -43,6 +46,17 @@ const Login = () => {
             console.error("Unknown error occurred while saving tokens.");
           }
         }
+
+        if (data.role === "admin") {
+          router.push("/dashboard/admin");
+        }
+        if (data.role === "farmer") {
+          router.push("/dashboard/farmer");
+        }
+        if (data.role === "user") {
+          router.push("/dashboard/customer");
+        }
+
       },
       onError: (error) => {
         console.error("Login error:", error.message);
