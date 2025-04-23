@@ -7,18 +7,22 @@ import { usePathname } from "next/navigation";
 import { headerRoutes } from "@/utils/routes";
 import KisanBazarLogo from "../../../public/assets/images/KisanBazar_Logo.png";
 import { Button } from "@/components/ui/button";
-
+import { useSelector } from "react-redux";
+import { RootState } from "@/lib/store/store";
 const Header = () => {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const items = useSelector((state:RootState)=>state.cart.cart);
   useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll,{signal});
+    return () =>controller.abort();
   }, []);
 
   return (
@@ -56,12 +60,12 @@ const Header = () => {
 
           {/* 🧺 Basket Icon */}
           <Link
-            href="/basket"
+            href="/cart"
             className="relative hover:text-black transition-colors"
           >
             <ShoppingBasket className="w-6 h-6" />
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
-              2
+              {items.length}
             </span>
           </Link>
 
@@ -80,12 +84,12 @@ const Header = () => {
         <div className="flex items-center space-x-4 lg:hidden relative">
           {/* 🧺 Basket Icon */}
           <Link
-            href="/basket"
+            href="/cart"
             className="relative hover:text-black transition-colors"
           >
             <ShoppingBasket className="w-6 h-6" />
             <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs px-1.5 rounded-full">
-              2
+              {items.length}
             </span>
           </Link>
 
@@ -121,7 +125,7 @@ const Header = () => {
 
           {/* 🧺 Basket Icon */}
           <Link
-            href="/basket"
+            href="/cart"
             className="text-pink-600 flex items-center space-x-1"
             onClick={() => setIsMobileMenuOpen(false)}
           >

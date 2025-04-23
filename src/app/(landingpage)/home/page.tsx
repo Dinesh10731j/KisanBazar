@@ -1,3 +1,5 @@
+
+"use client";
 import React from "react";
 import Image from "next/image";
 import Header from "@/app/components/header";
@@ -20,8 +22,17 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { products, customerReviews } from "@/utils/dummyData";
+import { CartItems } from "@/utils/types";
+import {useAppDispatch} from '@/lib/hooks'
+import {addToCart} from "@/lib/store/slices/cartSlice";
 
 const Home = () => {
+
+  const dispatch = useAppDispatch()
+
+  const handleAddToCart = (product:CartItems)=>{
+    dispatch(addToCart(product))
+  }
   return (
     <>
       <Header />
@@ -47,7 +58,7 @@ const Home = () => {
               variant={"ghost"}
               className="mt-6 cursor-pointer px-12 py-6 bg-[#FB8C00] hover:bg-[#E65100] text-white text-lg font-semibold rounded-lg transition duration-300 sm:px-8 sm:py-4 sm:text-md md:px-10 md:py-5 md:text-lg lg:px-12 lg:py-6 lg:text-xl"
             >
-              <ShoppingCart className="mr-0 h-6 w-6" strokeWidth={2} />
+              <ShoppingCart className="mr-0 h-6 w-6" strokeWidth={2}/>
               Buy Now
             </Button>
           </div>
@@ -118,7 +129,9 @@ const Home = () => {
                     <p className="text-lg font-bold text-[#E65100] mt-2">
                       Rs. {product.product_Price}
                     </p>
-                    <Button className="mt-4 bg-[#FB8C00] hover:bg-[#E65100] text-white px-4 py-2 rounded-lg">
+                    <Button className="mt-4 bg-[#FB8C00] cursor-pointer hover:bg-[#E65100] text-white px-4 py-2 rounded-lg"
+                    onClick={()=>handleAddToCart(product)}
+                    >
                       Add to Cart
                     </Button>
                   </div>

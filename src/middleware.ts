@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify, JWTPayload } from "jose";
 
@@ -65,6 +66,8 @@ export async function middleware(request: NextRequest) {
 
   return NextResponse.next();
 }
+
+
 
 export const config = {
   matcher: ["/dashboard/:path*"],

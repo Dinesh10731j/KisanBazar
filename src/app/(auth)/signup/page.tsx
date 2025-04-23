@@ -2,14 +2,15 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SignupFormValues, signupSchema} from "@/zod_schema/schema";
+import { SignupFormValues, signupSchema } from "@/zod_schema/schema";
 import loginImage from "../../../../public/assets/images/login_image.jpg";
-import { Mail, LockIcon,UserCircle } from "lucide-react";
+import { Mail, LockIcon, UserCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 import Link from "next/link";
+import { UseUserSignup } from "@/hooks/userSignup";
 
 const Signup = () => {
   const {
@@ -20,8 +21,10 @@ const Signup = () => {
     resolver: zodResolver(signupSchema),
   });
 
+  const signupmutation = UseUserSignup();
+
   const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
-    console.log(data);
+    signupmutation.mutate(data);
   };
 
   return (
@@ -45,7 +48,7 @@ const Signup = () => {
           {/* Login Form */}
           <div className="w-full lg:w-1/2 max-w-md bg-white p-8 rounded-lg ">
             <h2 className="text-3xl font-bold text-center text-[#FB8C00] mb-6">
-           Register Now!
+              Register Now!
             </h2>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -60,7 +63,7 @@ const Signup = () => {
                   <input
                     type="text"
                     placeholder="Username"
-                    {...register("email")}
+                    {...register("username")}
                     className="w-full focus:outline-none"
                   />
                 </div>

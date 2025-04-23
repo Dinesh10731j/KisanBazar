@@ -4,7 +4,6 @@ import { Endpoints } from "@/api/endpoints";
 import { LoginFormValues } from "@/utils/types";
 import { LoginResponse } from "@/utils/types";
 const { login } = Endpoints;
-
 const useLogin = async (data: LoginFormValues): Promise<LoginResponse> => {
   try {
     const response = await axiosInstance.post<LoginResponse>(login, data);

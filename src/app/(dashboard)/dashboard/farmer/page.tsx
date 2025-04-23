@@ -1,8 +1,10 @@
-import React from 'react'
-
+import React from 'react';
+import FarmerDashboardClient from '@/app/components/FarmerDashboardClient';
 const Farmer = () => {
   return (
-    <div>Farmer</div>
+    <>
+    <FarmerDashboardClient/>
+    </>
   )
 }
 

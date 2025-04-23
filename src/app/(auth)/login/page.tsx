@@ -10,9 +10,9 @@ import Image from "next/image";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 import Link from "next/link";
-
+import Cookies from "js-cookie";
+import { UseUserLogin } from "@/hooks/userLogin";
 const Login = () => {
-  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -21,8 +21,34 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
+
+  const loginMutation = UseUserLogin();
+
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
-    console.log(data);
+    loginMutation.mutate(data,{
+      onSuccess: (data) => {
+        try {
+          Cookies.set("access_token", data.access_token, {
+            secure: true,
+            sameSite: "Strict",
+          });
+          Cookies.set("refresh_token", data.refresh_token, {
+            secure: true,
+            sameSite: "Strict",
+          });
+        } catch (error) {
+          if (error instanceof Error) {
+            console.error("Token saving error:", error.message);
+          } else {
+            console.error("Unknown error occurred while saving tokens.");
+          }
+        }
+      },
+      onError: (error) => {
+        console.error("Login error:", error.message);
+      },
+      
+    });
   };
 
   return (
