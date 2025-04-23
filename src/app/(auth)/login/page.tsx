@@ -12,6 +12,7 @@ import Footer from "@/app/components/footer";
 import Link from "next/link";
 
 const Login = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
