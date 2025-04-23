@@ -1,5 +1,9 @@
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 export const Endpoints = {
-    contact:'/api/v1/users/contact',
-    login :'/api/v1/users/login',
-    signup:'/api/v1/users/register',
+
+    contact: `${BASE_URL}/api/v1/users/contact`,
+    login: `${BASE_URL}/api/v1/users/login`,
+    signup: `${BASE_URL}/api/v1/users/register`,
 }
+
+

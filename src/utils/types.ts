@@ -1,10 +1,12 @@
 import { StaticImageData } from "next/image";
-
 export interface ContactFormValues {
   name: string;
     email: string;
     message: string; 
+
 }
+
+
 
 
 export interface LoginFormValues {
@@ -37,12 +39,14 @@ export interface CartItems{
 export interface SignupResponse  {
   access_token: string;
   refresh_token: string;
+  role:string;
 };
 
 
 export interface LoginResponse {
   access_token: string;
   refresh_token: string;
+  role:string
 }
 
 
