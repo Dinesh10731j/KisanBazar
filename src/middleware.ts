@@ -19,7 +19,6 @@ async function verifyToken(token: string): Promise<CustomJWTPayload | null> {
     const { payload } = await jwtVerify<CustomJWTPayload>(token, secret, {
       algorithms: ["HS256"],
     });
-    console.log("JWT payload:", payload);
     return payload;
   } catch (error) {
     console.error("JWT verification failed:", error);
