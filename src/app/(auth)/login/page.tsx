@@ -28,7 +28,7 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
 
-    loginMutation.mutate(data,{
+    loginMutation.mutate(data, {
       onSuccess: (data) => {
         try {
           Cookies.set("access_token", data.access_token, {
@@ -61,7 +61,7 @@ const Login = () => {
       onError: (error) => {
         console.error("Login error:", error.message);
       },
-      
+
     });
   };
 

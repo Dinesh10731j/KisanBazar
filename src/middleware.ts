@@ -19,6 +19,8 @@ async function verifyToken(token: string): Promise<CustomJWTPayload | null> {
     const { payload } = await jwtVerify<CustomJWTPayload>(token, secret, {
       algorithms: ["HS256"],
     });
+
+    console.log("This is a payload",payload)
     return payload;
   } catch (error) {
     console.error("JWT verification failed:", error);
@@ -46,6 +48,7 @@ export async function middleware(request: NextRequest) {
     }
 
     const { role } = decoded;
+    console.log("This is role",role);
 
     if (!role || !["admin", "farmer", "user"].includes(role)) {
       console.error("Invalid or missing role in token payload:", role);
