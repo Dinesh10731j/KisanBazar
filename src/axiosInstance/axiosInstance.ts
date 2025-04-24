@@ -2,10 +2,12 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const axiosInstance = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, 
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
+
+  withCredentials: true,
 });
 
 axiosInstance.interceptors.request.use(
@@ -32,12 +34,17 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = Cookies.get("refresh_token");
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/token/refresh/`, {
-          refresh: refreshToken,
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/token/refresh/`,
+          {
+            refresh: refreshToken,
+          }
+        );
+
+        Cookies.set("access_token", res.data.access, {
+          secure: true,
+          sameSite: "Strict",
         });
-
-
-        Cookies.set("access_token", res.data.access, { secure: true, sameSite: "Strict" });
         originalRequest.headers.Authorization = `Bearer ${res.data.access}`;
         return axiosInstance(originalRequest);
       } catch (err) {
