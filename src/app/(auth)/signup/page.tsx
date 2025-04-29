@@ -11,6 +11,7 @@ import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 import Link from "next/link";
 import { UseUserSignup } from "@/hooks/userSignup";
+import Spinner from "@/app/components/Loader";
 
 const Signup = () => {
   const {
@@ -119,7 +120,7 @@ const Signup = () => {
                 type="submit"
                 className="w-full cursor-pointer bg-[#FB8C00] hover:bg-[#E65100] text-white font-semibold py-2 rounded-md"
               >
-                Signup
+               {signupmutation.isPending?<Spinner/>:"Signup"} 
               </Button>
             </form>
 
