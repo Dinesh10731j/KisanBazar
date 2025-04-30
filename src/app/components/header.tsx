@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Menu, X, ShoppingBasket } from "lucide-react";
 import Link from "next/link";
+import Cookies from "js-cookie";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { headerRoutes } from "@/utils/routes";
@@ -9,27 +10,59 @@ import KisanBazarLogo from "../../../public/assets/images/KisanBazar_Logo.png";
 import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store/store";
+import { jwtVerify } from "jose";
 const Header = () => {
   const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [dashboardRoute, setDashboardRoute] = useState("/dashboard");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
-  const items = useSelector((state:RootState)=>state.cart.cart);
+  const items = useSelector((state: RootState) => state.cart.cart);
+  const Jwt_Secret = process.env.NEXT_PUBLIC_JWT_SECRET as string;
+  const jwtSecret = new TextEncoder().encode(Jwt_Secret);
+  useEffect(() => {
+    const verifyToken = async () => {
+      const token = Cookies.get("access_token");
+      if (!token) return;
+
+      try {
+        const { payload } = await jwtVerify(
+          token,
+          jwtSecret
+        );
+        const role = payload.role as string;
+        const roleToRoute: Record<string, string> = {
+          admin: "/dashboard/admin",
+          farmer: "/dashboard/farmer",
+          user: "/dashboard/customer",
+        };
+
+        setDashboardRoute(roleToRoute[role] || "/dashboard");
+        setIsLoggedIn(true);
+      } catch (error) {
+        console.error("JWT verification failed:", error);
+        setIsLoggedIn(false);
+      }
+    };
+
+    verifyToken();
+  }, [jwtSecret]);
+
   useEffect(() => {
     const controller = new AbortController();
     const signal = controller.signal;
     const handleScroll = () => {
       setIsSticky(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll,{signal});
-    return () =>controller.abort();
+    window.addEventListener("scroll", handleScroll, { signal });
+    return () => controller.abort();
   }, []);
 
   return (
     <header
-      className={`text-green-300 py-6 px-5 fixed w-full z-50 transition-all duration-300 ${
-        isSticky ? "shadow-lg backdrop-blur-md bg-white/20" : ""
-      }`}
+      className={`text-green-300 py-6 px-5 fixed w-full z-50 transition-all duration-300 ${isSticky ? "shadow-lg backdrop-blur-md bg-white/20" : ""
+        }`}
       ref={headerRef}
     >
       <div className="max-w-screen-xl mx-auto flex justify-between items-center">
@@ -50,9 +83,8 @@ const Header = () => {
             <Link
               key={link.path}
               href={link.path}
-              className={`hover:text-black transition-colors ${
-                pathname === link.path ? "text-[#FB8C00] font-semibold" : ""
-              }`}
+              className={`hover:text-black transition-colors ${pathname === link.path ? "text-[#FB8C00] font-semibold" : ""
+                }`}
             >
               {link.name}
             </Link>
@@ -70,14 +102,35 @@ const Header = () => {
           </Link>
 
           {/* 🔐 Login Button */}
-          <Link href="/login">
-            <Button
-              variant="outline"
-              className="text-sm text-white cursor-pointer bg-[#FB8C00] hover:bg-[#E65100]"
-            >
-              Login
-            </Button>
-          </Link>
+
+
+          {
+            isLoggedIn ? (
+
+              <Link href={dashboardRoute}>
+                <Button
+                  variant="outline"
+                  className="text-sm text-white cursor-pointer bg-[#FB8C00] hover:bg-[#E65100]"
+                >
+                  Dashboard
+                </Button>
+              </Link>
+
+            ) :
+              (
+                <Link href="/login">
+                  <Button
+                    variant="outline"
+                    className="text-sm text-white cursor-pointer bg-[#FB8C00] hover:bg-[#E65100]"
+                  >
+                    Login
+                  </Button>
+                </Link>
+
+              )
+
+          }
+
         </nav>
 
         {/* Mobile Basket + Menu */}
@@ -105,18 +158,16 @@ const Header = () => {
 
       {/* Mobile Navigation */}
       <div
-        className={`fixed inset-0 z-40 bg-gradient-to-r from-[#ff8a00] to-[#e52e71] transition-transform transform ${
-          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:hidden`}
+        className={`fixed inset-0 z-40 bg-gradient-to-r from-[#ff8a00] to-[#e52e71] transition-transform transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:hidden`}
       >
         <nav className="flex flex-col items-center pt-16 space-y-6 text-lg">
           {headerRoutes?.map((link) => (
             <Link
               key={link.path}
               href={link.path}
-              className={`hover:text-black transition-colors ${
-                pathname === link.path ? "text-[#FB8C00] font-semibold" : ""
-              }`}
+              className={`hover:text-black transition-colors ${pathname === link.path ? "text-[#FB8C00] font-semibold" : ""
+                }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}
@@ -134,14 +185,29 @@ const Header = () => {
           </Link>
 
           {/* 🔐 Login Button */}
-          <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
-            <Button
-              variant="outline"
-              className="text-sm cursor-pointer text-white bg-[#FB8C00] hover:bg-[#E65100] border-white"
-            >
-              Login
-            </Button>
-          </Link>
+
+          {
+            isLoggedIn ? (
+              <Link href={dashboardRoute} onClick={() => setIsMobileMenuOpen(false)}>
+                <Button
+                  variant="outline"
+                  className="text-sm cursor-pointer text-white bg-[#FB8C00] hover:bg-[#E65100] border-white"
+                >
+                  Dashboard
+                </Button>
+              </Link>
+            ) :
+              (
+                <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Button
+                    variant="outline"
+                    className="text-sm cursor-pointer text-white bg-[#FB8C00] hover:bg-[#E65100] border-white"
+                  >
+                    Login
+                  </Button>
+                </Link>
+              )
+          }
 
           {/* Close Button */}
           <button
