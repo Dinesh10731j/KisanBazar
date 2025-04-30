@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginFormValues, loginSchema } from "@/zod_schema/schema";
@@ -12,9 +13,9 @@ import Footer from "@/app/components/footer";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import { UseUserLogin } from "@/hooks/userLogin";
-import { useRouter } from "next/navigation";
 import Spinner from "@/app/components/Loader";
 const Login = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -25,11 +26,11 @@ const Login = () => {
 
 
   const loginMutation = UseUserLogin();
-  const router = useRouter();
+
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
 
-    loginMutation.mutate(data,{
+    loginMutation.mutate(data, {
       onSuccess: (data) => {
         try {
           Cookies.set("access_token", data?.access_token, {
@@ -37,28 +38,12 @@ const Login = () => {
             sameSite: "None",
             path: "/",
           });
-          Cookies.set("refresh_token", data?.refresh_token, {
-            secure: true,
-            sameSite: "None",
-            path: "/",
-          });
-        switch (data?.role) {
-          case "admin":
-            router.push("/dashboard/admin");
-            break;  
-          case "farmer":
-            router.push("/dashboard/farmer");
-            break;
-          case "user":
-            router.push("/dashboard/customer");
-            break;
-          default:
-            router.push("/login");
-            break;
-        }
-        }catch (error) {
+
+        } catch (error) {
           console.error("Token saving error:", error);
         }
+
+        router.push("/dashboard");
       },
       onError: (error) => {
         console.error("Login error:", error.message);
@@ -138,7 +123,7 @@ const Login = () => {
                 type="submit"
                 className="w-full cursor-pointer bg-[#FB8C00] hover:bg-[#E65100] text-white font-semibold py-2 rounded-md"
               >
-                {loginMutation.isPending?<Spinner/>:"Login"}
+                {loginMutation.isPending ? <Spinner /> : "Login"}
               </Button>
             </form>
 
