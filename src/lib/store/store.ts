@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import cartReducer from "@/lib/store/slices/cartSlice"
+import toastReducer from "@/lib/store/slices/toastSlice"
 export const makeStore = () => {
   return configureStore({
     reducer: {
-        cart:cartReducer
+        cart:cartReducer,
+        toast:toastReducer
     },
   })
 }
