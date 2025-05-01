@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { TanstackQueryProvider } from "./tanstack-query-provider";
 import StoreProvider from "./StoreProvider";
+import ToastContainer from "./components/ToastContainer";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -33,6 +34,7 @@ export default function RootLayout({
       >
         <StoreProvider items={[]}>
         <TanstackQueryProvider>
+          <ToastContainer/>
         {children}
         </TanstackQueryProvider>
         </StoreProvider>

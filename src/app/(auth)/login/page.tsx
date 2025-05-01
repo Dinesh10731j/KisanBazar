@@ -14,6 +14,8 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { UseUserLogin } from "@/hooks/userLogin";
 import Spinner from "@/app/components/Loader";
+import { addToast } from "@/lib/store/slices/toastSlice";
+import { useDispatch } from "react-redux";
 const Login = () => {
   const router = useRouter();
   const {
@@ -26,7 +28,7 @@ const Login = () => {
 
 
   const loginMutation = UseUserLogin();
-
+const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
 
@@ -43,10 +45,12 @@ const Login = () => {
           console.error("Token saving error:", error);
         }
 
+        dispatch(addToast({type: "success", message: "Login successful!"}));
+
         router.push("/dashboard");
       },
       onError: (error) => {
-        console.error("Login error:", error.message);
+        dispatch(addToast({type: "error", message: error.message}));
       },
     });
   };
