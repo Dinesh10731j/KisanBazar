@@ -1,13 +1,9 @@
 import { StaticImageData } from "next/image";
 export interface ContactFormValues {
   name: string;
-    email: string;
-    message: string; 
-
+  email: string;
+  message: string;
 }
-
-
-
 
 export interface LoginFormValues {
   email: string;
@@ -19,41 +15,34 @@ export interface SignupFormValues {
   password: string;
 }
 
-
 export interface SidebarProps {
-  role: "admin" | "farmer" | "user"; 
+  role: "admin" | "farmer" | "user";
 }
 
-
-export interface CartItems{
-  id:number,
+export interface CartItems {
+  id: number;
   product_Name: string;
   product_Image: StaticImageData;
   product_Price: number;
   product_Description: string;
-  quantity:number
+  quantity: number;
 }
 
-
-
-export interface SignupResponse  {
+export interface SignupResponse {
   access_token: string;
   refresh_token: string;
-  role:string;
-};
-
+  role: string;
+}
 
 export interface LoginResponse {
   access_token: string;
   refresh_token: string;
-  role:string
+  role: string;
 }
 
-
-
 export interface ContactResponse {
-  message:string,
-  error:string,
+  message: string;
+  error: string;
 }
 
 export interface Product {
@@ -62,14 +51,12 @@ export interface Product {
   product_Image: StaticImageData;
   product_Price: number;
   product_Description: string;
-  quantity:number
+  quantity: number;
 }
 
-
-export interface Order{
-  id:string,
-  date:string,
-  status:string,
-  amount:string
+export interface Order {
+  id: string;
+  date: string;
+  status: string;
+  amount: string;
 }
-

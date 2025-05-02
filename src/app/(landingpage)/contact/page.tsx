@@ -11,6 +11,9 @@ import contactImage from "../../../../public/assets/images/contact_image.jpg";
 import { contactSchema } from "@/zod_schema/schema";
 import { ContactFormValues } from "@/zod_schema/schema";
 import { UseUserContact } from "@/hooks/userContact";
+import Spinner from "@/app/components/Loader";
+import { useDispatch } from "react-redux";
+import { addToast } from "@/lib/store/slices/toastSlice";
 const Contact = () => {
   const {
     register,
@@ -22,12 +25,20 @@ const Contact = () => {
   });
 
 
-  const mutation = UseUserContact()
+  const mutation = UseUserContact();
+  const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<ContactFormValues> = (data) => {
-mutation.mutate(data)
+    mutation.mutate(data, {
+      onSuccess: () => {
+        dispatch(addToast({ message: 'Message Sent Successfully', type: "success" }))
+      },
+      onError: (error) => {
+        dispatch(addToast({ message: error.message, type: "error" }))
+      }
+    })
     reset();
-    alert("Message sent successfully!");
+
   };
 
   return (
@@ -100,7 +111,7 @@ mutation.mutate(data)
                 type="submit"
                 className="w-full cursor-pointer bg-pink-600 hover:bg-pink-700 text-white py-2 px-4 rounded-xl"
               >
-                {mutation.isPending ? "Sending..." : "Send Message"}
+                {mutation.isPending ? <Spinner /> : "Send Message"}
               </Button>
             </form>
 

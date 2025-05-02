@@ -4,7 +4,6 @@ const {contact} = Endpoints
 import {useMutation} from "@tanstack/react-query";
 import { ContactFormValues } from "@/utils/types";
 import { ContactResponse } from "@/utils/types";
-
 const useContact = async (data:ContactFormValues):Promise<ContactResponse> => {
   try{
     const response = await axiosInstance.post<ContactResponse>(contact, data);
@@ -21,6 +20,7 @@ const useContact = async (data:ContactFormValues):Promise<ContactResponse> => {
 
 
   export const UseUserContact = ()=>{
+  
     return useMutation<ContactResponse,Error,ContactFormValues>({
         mutationKey:['contact'],
         mutationFn:useContact
