@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '@/lib/store/store';
 import { Card, CardContent } from '@/components/ui/card';
@@ -7,10 +8,16 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Trash2, Plus, Minus } from 'lucide-react';
 import Image from 'next/image';
+import { UseUserPayment } from '@/hooks/usePayment';
+import Spinner from '@/app/components/Loader';
+import { PaymentFormValues } from '@/utils/types';
+import { addToast } from '@/lib/store/slices/toastSlice';
 
 const Cart = () => {
+  const [paymentMethod, setPaymentMethod] = useState<'onCash' | 'eSewa' | 'Khalti' | ''>('');
   const cartItems = useSelector((state: RootState) => state.cart.cart);
   const dispatch = useDispatch();
+  const paymentMutation = UseUserPayment();
 
   const totalPrice = cartItems.reduce((acc, item) => {
     const numericPrice = parseInt(String(item.product_Price)?.replace(/[^\d]/g, ''), 10);
@@ -27,6 +34,37 @@ const Cart = () => {
 
   const handleDecrease = (id: number) => {
     dispatch({ type: 'cart/decreaseQuantity', payload: id });
+  };
+
+  const handleCheckout = () => {
+    if (!paymentMethod) {
+      dispatch(addToast({ message: 'Please select a payment method', type: 'error' }));
+      return;
+    }
+
+    const formValues: PaymentFormValues = {
+      customerName: '6810b62e87201f91a314be4b', 
+      productIds: cartItems.map((item) => item.id.toString()),
+      amount: totalPrice,
+      products: cartItems.map((item) => ({
+        name: item.product_Name,
+        price: item.product_Price,
+        quantity: item.quantity,
+      })),
+      orderId: [uuidv4()],
+      paymentMethod,
+    };
+
+
+    paymentMutation.mutate(formValues, {
+      onSuccess: (data) => {
+        if (data.paymentUrl) {
+          window.location.href = data.paymentUrl;
+        } else {
+          alert('Payment successful!');
+        }
+      },
+    });
   };
 
   return (
@@ -53,31 +91,17 @@ const Cart = () => {
                     <p className="text-green-600">{item.product_Price}</p>
 
                     <div className="flex items-center gap-2 mt-2">
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className='cursor-pointer'
-                        onClick={() => handleDecrease(item.id)}
-                      >
-                        <Minus className="w-4 h-4 cursor-pointer" />
+                      <Button size="icon" variant="outline" onClick={() => handleDecrease(item.id)}>
+                        <Minus className="w-4 h-4" />
                       </Button>
                       <span className="w-6 text-center">{item.quantity}</span>
-                      <Button
-                        size="icon"
-                        variant="outline"
-                        className='cursor-pointer'
-                        onClick={() => handleIncrease(item.id)}
-                      >
+                      <Button size="icon" variant="outline" onClick={() => handleIncrease(item.id)}>
                         <Plus className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
                 </div>
-                <Button
-                  variant="ghost"
-                  className="mt-2 sm:mt-0 cursor-pointer"
-                  onClick={() => handleRemove(item.id)}
-                >
+                <Button variant="ghost" onClick={() => handleRemove(item.id)}>
                   <Trash2 className="w-5 h-5 text-red-500" />
                 </Button>
               </Card>
@@ -97,8 +121,49 @@ const Cart = () => {
                 <span>Total Price</span>
                 <span>NPR {totalPrice}</span>
               </div>
-              <Button className="w-full cursor-pointer bg-green-600 hover:bg-green-700 text-white mt-2">
-                Proceed to Checkout
+
+              {/* Payment Method */}
+              <div>
+                <p className="font-semibold mb-2">Select Payment Method:</p>
+                <div className="space-y-2">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="onCash"
+                      checked={paymentMethod === 'onCash'}
+                      onChange={(e) => setPaymentMethod(e.target.value as 'onCash')}
+                    />
+                    On Cash
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="eSewa"
+                      checked={paymentMethod === 'eSewa'}
+                      onChange={(e) => setPaymentMethod(e.target.value as 'eSewa')}
+                    />
+                    eSewa
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="Khalti"
+                      checked={paymentMethod === 'Khalti'}
+                      onChange={(e) => setPaymentMethod(e.target.value as 'Khalti')}
+                    />
+                    Khalti
+                  </label>
+                </div>
+              </div>
+
+              <Button
+                className="w-full cursor-pointer bg-green-600 hover:bg-green-700 text-white mt-2"
+                onClick={handleCheckout}
+              >
+               {paymentMutation.isPending?<Spinner/>:"Proceed to Checkout"} 
               </Button>
             </CardContent>
           </Card>
