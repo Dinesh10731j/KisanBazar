@@ -12,6 +12,9 @@ import Footer from "@/app/components/footer";
 import Link from "next/link";
 import { UseUserSignup } from "@/hooks/userSignup";
 import Spinner from "@/app/components/Loader";
+import { useDispatch } from "react-redux";
+import { addToast } from "@/lib/store/slices/toastSlice";
+
 
 const Signup = () => {
   const {
@@ -21,11 +24,21 @@ const Signup = () => {
   } = useForm<SignupFormValues>({
     resolver: zodResolver(signupSchema),
   });
+const dispatch = useDispatch();
 
   const signupmutation = UseUserSignup();
 
   const onSubmit: SubmitHandler<SignupFormValues> = (data) => {
-    signupmutation.mutate(data);
+    signupmutation.mutate(data,{
+      onSuccess:()=>{
+   
+          dispatch(addToast({message:'Signup Successful',type:"success"}))
+   
+        },onError:(error)=>{
+          dispatch(addToast({message:error.message,type:"error"}))
+        }
+    })
+    
   };
 
   return (
