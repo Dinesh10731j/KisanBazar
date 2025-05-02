@@ -60,3 +60,26 @@ export interface Order {
   status: string;
   amount: string;
 }
+
+
+export interface PaymentFormValues {
+  customerName: string;
+  productIds: string[];
+  products: {
+    name: string;
+    price: number;
+    quantity: number;
+  }[];
+  amount: number;
+  paymentMethod: 'eSewa' | 'Khalti' | 'onCash';
+  orderId: string[];
+}
+
+
+export interface PaymentResponse {
+  message: string;
+  error: string;
+  orderId: string;
+  paymentUrl: string;
+}
+
