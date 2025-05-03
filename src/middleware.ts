@@ -12,15 +12,16 @@ const roleRouteMap: Record<string, string> = {
 };
 
 export const middleware = async (request: NextRequest) => {
-  const token = request.cookies.get("access_token");
+  const token = request.cookies.get("access_token")?.value;
   const { pathname } = request.nextUrl;
 
   if (!token) {
+    console.log("No token found, redirecting to login.");
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   try {
-    const { payload } = await jwtVerify(token.value, JWT_SECRET);
+    const { payload } = await jwtVerify(token, JWT_SECRET);
     const userRole = payload.role as string;
 
     const expectedPath = `/dashboard/${roleRouteMap[userRole]}`;
