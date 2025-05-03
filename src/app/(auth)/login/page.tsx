@@ -11,7 +11,6 @@ import Image from "next/image";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
 import Link from "next/link";
-import Cookies from "js-cookie";
 import { UseUserLogin } from "@/hooks/userLogin";
 import Spinner from "@/app/components/Loader";
 import { addToast } from "@/lib/store/slices/toastSlice";
@@ -28,29 +27,20 @@ const Login = () => {
 
 
   const loginMutation = UseUserLogin();
-const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
 
     loginMutation.mutate(data, {
-      onSuccess: (data) => {
-        try {
-          Cookies.set("access_token", data?.access_token, {
-            secure: true,
-            sameSite: "None",
-            path: "/",
-          });
+      onSuccess: () => {
 
-        } catch (error) {
-          console.error("Token saving error:", error);
-        }
 
-        dispatch(addToast({type: "success", message: "Login successful!"}));
+        dispatch(addToast({ type: "success", message: "Login successful!" }));
 
         router.push("/dashboard");
       },
       onError: (error) => {
-        dispatch(addToast({type: "error", message: error.message}));
+        dispatch(addToast({ type: "error", message: error.message }));
       },
     });
   };
