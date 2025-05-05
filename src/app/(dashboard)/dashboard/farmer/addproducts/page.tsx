@@ -8,9 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { productSchema, ProductFormValues } from '@/zod_schema/schema';
-
+import { productSchema, ProductFormValues } from '@/zod_schema/schema'
+import { UseUserAddProducts } from '@/hooks/useAddProducts';
+import { addToast } from '@/lib/store/slices/toastSlice';
+import { useDispatch } from 'react-redux';
 const AddProducts = () => {
+  const dispatch = useDispatch();
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -20,18 +23,35 @@ const AddProducts = () => {
       description: '',
     },
   });
+  const addProductMutation = UseUserAddProducts();
 
   const onSubmit = (data: ProductFormValues) => {
-    const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('price', data.price);
-    formData.append('quantity', data.quantity);
-    formData.append('description', data.description || '');
-    formData.append('image', data.image[0]); // Attach the actual file
+    if (!data.image || !(data.image instanceof FileList) || data.image.length === 0) {
+      dispatch(addToast({ message: 'Image is required', type: 'error' }));
+      return;
+    }
 
-    console.log('Sending FormData:', data);
-    // You can now send `formData` using fetch or axios
+    const imageFile = data.image[0];
+
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("price", data.price);
+    formData.append("quantity", data.quantity);
+    formData.append("description", data.description || "");
+    formData.append("image", imageFile, imageFile.name);
+
+    addProductMutation.mutate(formData, {
+      onSuccess: () => {
+        dispatch(addToast({ message: 'Product added successfully', type: 'success' }));
+        form.reset();
+
+      },
+      onError: (error) => {
+        dispatch(addToast({ message: error.message, type: 'error' }));
+      },
+    });
   };
+
 
   return (
     <div className="p-4 max-w-2xl mx-auto">

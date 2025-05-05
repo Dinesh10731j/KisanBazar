@@ -83,3 +83,15 @@ export interface PaymentResponse {
   paymentUrl: string;
 }
 
+
+export interface addProductFormValues {
+  name: string;
+  price: string;
+  quantity: string;
+  description?: string;
+  image: File| null;
+}
+
+export interface addProductReponse{
+  message:string
+}
