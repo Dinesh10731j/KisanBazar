@@ -1,18 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { productSchema,ProductFormValues } from '@/zod_schema/schema';
-import Image from 'next/image';
-const AddProducts = () => {
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+import { productSchema, ProductFormValues } from '@/zod_schema/schema';
 
+const AddProducts = () => {
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
@@ -24,20 +22,15 @@ const AddProducts = () => {
   });
 
   const onSubmit = (data: ProductFormValues) => {
-    const file = data.image[0];
-    console.log('Product added:', {
-      ...data,
-      imageFileName: file.name,
-    });
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('price', data.price);
+    formData.append('quantity', data.quantity);
+    formData.append('description', data.description || '');
+    formData.append('image', data.image[0]); // Attach the actual file
 
-
-  };
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-    }
+    console.log('Sending FormData:', data);
+    // You can now send `formData` using fetch or axios
   };
 
   return (
@@ -79,24 +72,26 @@ const AddProducts = () => {
 
             <div>
               <Label>Product Image</Label>
-              <Input
-                type="file"
-                accept="image/*"
-                {...form.register('image')}
-                onChange={(e) => {
-                  form.setValue('image', e.target.files);
-                  handleImageChange(e);
-                }}
+              <Controller
+                control={form.control}
+                name="image"
+                rules={{ required: 'Image is required' }}
+                render={({ field }) => (
+                  <Input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => field.onChange(e.target.files)}
+                  />
+                )}
               />
               {form.formState.errors.image && (
                 <p className="text-red-500 text-sm">{String(form.formState.errors.image?.message)}</p>
               )}
-              {imagePreview && (
-                <Image src={imagePreview} alt="Preview" className="mt-2 w-32 h-32 object-cover rounded" />
-              )}
             </div>
 
-            <Button type="submit" className="w-full mt-4">Add Product</Button>
+            <Button type="submit" className="w-full mt-4">
+              Add Product
+            </Button>
           </CardContent>
         </Card>
       </form>
