@@ -4,4 +4,5 @@ export const Endpoints = {
   login: `${BASE_URL}/api/v1/users/login`,
   signup: `${BASE_URL}/api/v1/users/register`,
   payment: `${BASE_URL}/api/v1/payments/initiate`,
+  addProduct: `${BASE_URL}/api/v1/farmers/add-products`,
 };

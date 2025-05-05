@@ -50,8 +50,9 @@ export const signupSchema = z.object({
     price: z.string().min(1, 'Price is required'),
     quantity: z.string().min(1, 'Quantity is required'),
     description: z.string().optional(),
-    image: z.any().refine((files) => files?.length > 0, {
-      message: 'Image is required',
+    image: z
+    .custom<File>((v) => v instanceof FileList && v.length > 0, {
+      message: "Image is required",
     }),
   });
 
