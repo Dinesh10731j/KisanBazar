@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "@/axiosInstance/axiosInstance";
-import { getProductsResponse } from "@/utils/types";
+import { getProductsResponseType } from "@/utils/types";
 import { Endpoints } from "@/api/endpoints";
 const { getProducts } = Endpoints;
 
-const useGetProducts = async (): Promise<getProductsResponse> => {
+const useGetProducts = async (): Promise<getProductsResponseType> => {
   try {
-    const response = await axiosInstance.get<getProductsResponse>(getProducts);
+    const response = await axiosInstance.get<getProductsResponseType>(getProducts);
     if (response.status === 200) {
       return response.data;
     } else {
@@ -19,7 +19,7 @@ const useGetProducts = async (): Promise<getProductsResponse> => {
 };
 
 export const UsegetUserProducts = () => {
-  return useQuery<getProductsResponse,Error>({
+  return useQuery<getProductsResponseType,Error>({
     queryKey: ["getProducts"],
     queryFn: useGetProducts,
     refetchOnWindowFocus: true,
