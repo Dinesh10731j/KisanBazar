@@ -97,16 +97,18 @@ export interface addProductReponse{
 }
 
 
-export interface getProductsResponse{
+export type getProductsResponse = {
   _id: string;
   name: string;
-  price: string; 
-  quantity: string; 
+  price: string;
+  quantity: string;
   description: string;
   imageUrl: string;
   farmerId: string;
-  createdAt: string; 
-  updatedAt: string; 
+  createdAt: string;
+  updatedAt: string;
   __v: number;
-}
+};
+
+export type getProductsResponseType = getProductsResponse[];
 

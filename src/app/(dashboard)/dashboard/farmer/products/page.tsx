@@ -4,13 +4,17 @@ import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Search } from 'lucide-react';
-import { sampleProducts } from '@/utils/dummyData';
+import { UsegetUserProducts } from '@/hooks/usegetProducts';
+import { getProductsResponse } from '@/utils/types';
+import Image from 'next/image';
 
 const Products = () => {
+  const { data: products = [], isLoading, isError } = UsegetUserProducts();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredProducts = sampleProducts.filter((product) =>
+  const filteredProducts = products?.filter((product: getProductsResponse) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -28,22 +32,51 @@ const Products = () => {
         />
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredProducts.map((product) => (
-          <Card key={product.id} className="rounded-2xl shadow-md">
-            <CardContent className="p-4">
-              <p className="text-lg font-semibold">{product.name}</p>
-              <p className="text-sm text-gray-600">Price: {product.price}</p>
-              <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
-              <Button className="mt-3 w-full">Edit Product</Button>
-            </CardContent>
-          </Card>
-        ))}
+      {isLoading && (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, index) => (
+            <Card key={index} className="rounded-2xl shadow-md overflow-hidden">
+              <Skeleton className="h-40 w-full bg-gray-400" />
+              <CardContent className="p-4 space-y-3">
+                <Skeleton className="h-6 w-3/4 bg-gray-300" />
+                <Skeleton className="h-4 w-1/2 bg-gray-300" />
+                <Skeleton className="h-4 w-1/3 bg-gray-300" />
+                <Skeleton className="h-8 w-full mt-3 bg-gray-300" />
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      )}
 
-        {filteredProducts.length === 0 && (
-          <p className="text-center text-gray-500 col-span-full">No products found.</p>
-        )}
-      </div>
+      {isError && (
+        <p className="text-center text-red-500">Failed to load products. Please try again.</p>
+      )}
+
+      {!isLoading && !isError && (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product: getProductsResponse) => (
+              <Card key={product._id} className="rounded-2xl shadow-md overflow-hidden">
+                <Image
+                  src={product.imageUrl}
+                  alt={product.name}
+                  width={500}
+                  height={300}
+                  className="h-40 w-full object-cover"
+                />
+                <CardContent className="p-4">
+                  <p className="text-lg font-semibold">{product.name}</p>
+                  <p className="text-sm text-gray-600">Price: {product.price}</p>
+                  <p className="text-sm text-gray-600"> Quantity: {product.quantity.toLowerCase().endsWith('kg') ? product.quantity : `${product.quantity}kg`}</p>
+                  <Button className="mt-3 w-full cursor-pointer">Edit Product</Button>
+                </CardContent>
+              </Card>
+            ))
+          ) : (
+            <p className="text-center text-gray-500 col-span-full">No products found.</p>
+          )}
+        </div>
+      )}
     </div>
   );
 };
