@@ -95,3 +95,18 @@ export interface addProductFormValues {
 export interface addProductReponse{
   message:string
 }
+
+
+export interface getProductsResponse{
+  _id: string;
+  name: string;
+  price: string; 
+  quantity: string; 
+  description: string;
+  imageUrl: string;
+  farmerId: string;
+  createdAt: string; 
+  updatedAt: string; 
+  __v: number;
+}
+
