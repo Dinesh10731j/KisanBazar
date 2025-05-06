@@ -6,4 +6,6 @@ export const Endpoints = {
   payment: `${BASE_URL}/api/v1/payments/initiate`,
   addProduct: `${BASE_URL}/api/v1/farmers/add-products`,
   getProducts: `${BASE_URL}/api/v1/farmers/get-products`,
+  deleteProduct: `${BASE_URL}/api/v1/farmers/delete-product`,
+  updateProduct: `${BASE_URL}/api/v1/farmers/update-product`,
 };
