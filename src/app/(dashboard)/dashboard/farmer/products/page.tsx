@@ -9,15 +9,23 @@ import { Search, Trash, Edit } from 'lucide-react';
 import { UsegetUserProducts } from '@/hooks/usegetProducts';
 import { getProductsResponse } from '@/utils/types';
 import Image from 'next/image';
+import { UseDeleteProduct } from '@/hooks/useDeleteproduct';
+import { useDispatch } from 'react-redux';
+import { addToast } from '@/lib/store/slices/toastSlice';
+import { UseUserUpdateProduct } from '@/hooks/useUpdateProducts';
 
 const Products = () => {
+  const dispatch = useDispatch();
+  const updateProductMutation = UseUserUpdateProduct();
   const { data: products = [], isLoading, isError } = UsegetUserProducts();
+  const deleteProductMutation = UseDeleteProduct();
   const [searchQuery, setSearchQuery] = useState('');
   const [editingProduct, setEditingProduct] = useState<getProductsResponse | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     price: '',
     quantity: '',
+    description: '',
   });
 
   const filteredProducts = products?.filter((product: getProductsResponse) =>
@@ -30,20 +38,62 @@ const Products = () => {
       name: product.name,
       price: product.price.toString(),
       quantity: product.quantity,
+      description:product.description ?? '',
       
     });
   };
 
   const handleDelete = (productId: string) => {
-    console.log('Delete product:', productId);
+  deleteProductMutation.mutate(productId, {
+    onSuccess: () => {
+      dispatch(addToast({ message: 'Product deleted successfully', type: 'success' }));
+    },
+    onError: (error) => {
+    dispatch(addToast({ message: error.message, type: 'error' }));
+    },
+  });
  
   };
 
   const handleSave = () => {
-    console.log('Saving updated product:', formData);
-    setEditingProduct(null);
+    const { name, price, quantity } = formData;
+  
+    if (!name || !price || !quantity) {
+      dispatch(addToast({ message: 'Please fill out all fields before saving.', type: 'error' }));
+      return;
+    }
+  
+    if (!editingProduct?._id) {
+      dispatch(addToast({ message: 'No product selected for editing.', type: 'error' }));
+      return;
+    }
+  
+    // Convert plain object to FormData
+    const formDataToSend = new FormData();
+    formDataToSend.append('name', name);
+    formDataToSend.append('price', price);
+    formDataToSend.append('quantity', quantity);
+  
+    // If you also have image or description, add them too
+    if (formData.description) formDataToSend.append('description', formData.description);
+  
+    updateProductMutation.mutate(
+      {
+        formData: formDataToSend,
+        productId: editingProduct._id,
+      },
+      {
+        onSuccess: () => {
+          dispatch(addToast({ message: 'Product updated successfully', type: 'success' }));
+          setEditingProduct(null);
+        },
+        onError: (error) => {
+          dispatch(addToast({ message: error.message, type: 'error' }));
+        },
+      }
+    );
   };
-
+  
   return (
     <div className="p-4 max-w-6xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">My Products</h1>
@@ -100,6 +150,12 @@ const Products = () => {
                   <Input
                     placeholder="Quantity"
                     value={formData.quantity}
+                    onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                    className="mb-4"
+                  />
+                    <Input
+                    placeholder="Description"
+                    value={formData.description}
                     onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
                     className="mb-4"
                   />

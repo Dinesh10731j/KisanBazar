@@ -112,3 +112,17 @@ export type getProductsResponse = {
 
 export type getProductsResponseType = getProductsResponse[];
 
+
+export interface deleteProductResponse {
+  message: string;
+  error: string;
+}
+
+
+export interface updateProductResponse {
+  message: string;
+  error: string;
+
+}
+
+
