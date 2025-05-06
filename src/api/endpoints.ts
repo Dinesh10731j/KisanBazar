@@ -5,4 +5,5 @@ export const Endpoints = {
   signup: `${BASE_URL}/api/v1/users/register`,
   payment: `${BASE_URL}/api/v1/payments/initiate`,
   addProduct: `${BASE_URL}/api/v1/farmers/add-products`,
+  getProducts: `${BASE_URL}/api/v1/farmers/get-products`,
 };
