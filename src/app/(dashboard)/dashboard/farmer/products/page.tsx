@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Search } from 'lucide-react';
+import { Search, Trash, Edit } from 'lucide-react';
 import { UsegetUserProducts } from '@/hooks/usegetProducts';
 import { getProductsResponse } from '@/utils/types';
 import Image from 'next/image';
@@ -13,10 +13,36 @@ import Image from 'next/image';
 const Products = () => {
   const { data: products = [], isLoading, isError } = UsegetUserProducts();
   const [searchQuery, setSearchQuery] = useState('');
+  const [editingProduct, setEditingProduct] = useState<getProductsResponse | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    price: '',
+    quantity: '',
+  });
 
   const filteredProducts = products?.filter((product: getProductsResponse) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleEdit = (product: getProductsResponse) => {
+    setEditingProduct(product);
+    setFormData({
+      name: product.name,
+      price: product.price.toString(),
+      quantity: product.quantity,
+      
+    });
+  };
+
+  const handleDelete = (productId: string) => {
+    console.log('Delete product:', productId);
+ 
+  };
+
+  const handleSave = () => {
+    console.log('Saving updated product:', formData);
+    setEditingProduct(null);
+  };
 
   return (
     <div className="p-4 max-w-6xl mx-auto">
@@ -55,23 +81,71 @@ const Products = () => {
       {!isLoading && !isError && (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredProducts.length > 0 ? (
-            filteredProducts.map((product: getProductsResponse) => (
-              <Card key={product._id} className="rounded-2xl shadow-md overflow-hidden">
-                <Image
-                  src={product.imageUrl}
-                  alt={product.name}
-                  width={500}
-                  height={300}
-                  className="h-40 w-full object-cover"
-                />
-                <CardContent className="p-4">
-                  <p className="text-lg font-semibold">{product.name}</p>
-                  <p className="text-sm text-gray-600">Price: {product.price}</p>
-                  <p className="text-sm text-gray-600"> Quantity: {product.quantity.toLowerCase().endsWith('kg') ? product.quantity : `${product.quantity}kg`}</p>
-                  <Button className="mt-3 w-full cursor-pointer">Edit Product</Button>
-                </CardContent>
-              </Card>
-            ))
+            filteredProducts.map((product: getProductsResponse) =>
+              editingProduct && editingProduct._id === product._id ? (
+                <Card key={product._id} className="rounded-2xl shadow-md overflow-hidden p-4">
+                  <h2 className="text-xl font-semibold mb-4">Edit Product</h2>
+                  <Input
+                    placeholder="Product Name"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="mb-2"
+                  />
+                  <Input
+                    placeholder="Price"
+                    value={formData.price}
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    className="mb-2"
+                  />
+                  <Input
+                    placeholder="Quantity"
+                    value={formData.quantity}
+                    onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                    className="mb-4"
+                  />
+                  <div className="flex gap-2">
+                    <Button className="bg-blue-500 cursor-pointer" onClick={handleSave}>Save</Button>
+                    <Button variant="outline" onClick={() => setEditingProduct(null)}>Cancel</Button>
+                  </div>
+                </Card>
+              ) : (
+                <Card key={product._id} className="rounded-2xl shadow-md overflow-hidden">
+                  <Image
+                    src={product.imageUrl}
+                    alt={product.name}
+                    width={500}
+                    height={300}
+                    className="h-40 w-full object-cover"
+                  />
+                  <CardContent className="p-4">
+                    <p className="text-lg font-semibold">{product.name}</p>
+                    <p className="text-sm text-gray-600">Price: {product.price}</p>
+                    <p className="text-sm text-gray-600">
+                      Quantity: {product.quantity.toLowerCase().endsWith('kg') ? product.quantity : `${product.quantity}kg`}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Description: {product.description ?? 'No description available'}
+                    </p>
+                    <div className="flex flex-col justify-between items-center mt-4 gap-2">
+                      <Button
+                        variant="outline"
+                        className="w-full flex items-center gap-2 bg-green-300 cursor-pointer"
+                        onClick={() => handleEdit(product)}
+                      >
+                        <Edit className="w-4 h-4" /> Edit
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        className="w-full flex items-center gap-2 bg-red-500 cursor-pointer"
+                        onClick={() => handleDelete(product._id)}
+                      >
+                        <Trash className="w-4 h-4" /> Delete
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )
+            )
           ) : (
             <p className="text-center text-gray-500 col-span-full">No products found.</p>
           )}
