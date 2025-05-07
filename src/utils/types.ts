@@ -125,4 +125,20 @@ export interface updateProductResponse {
 
 }
 
+export interface updateProfileFormValues {
+  username:string,
+  email:string,
+  password:string,  
+}
+
+
+export interface updateProfileResponse {
+  message: string;
+  error: string;
+}
+
+
+
+
+
 

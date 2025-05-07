@@ -73,8 +73,6 @@ const Products = () => {
     formDataToSend.append('name', name);
     formDataToSend.append('price', price);
     formDataToSend.append('quantity', quantity);
-  
-    // If you also have image or description, add them too
     if (formData.description) formDataToSend.append('description', formData.description);
   
     updateProductMutation.mutate(
@@ -161,7 +159,7 @@ const Products = () => {
                   />
                   <div className="flex gap-2">
                     <Button className="bg-blue-500 cursor-pointer" onClick={handleSave}>Save</Button>
-                    <Button variant="outline" onClick={() => setEditingProduct(null)}>Cancel</Button>
+                    <Button className='cursor-pointer bg-red-500' onClick={() => setEditingProduct(null)}>Cancel</Button>
                   </div>
                 </Card>
               ) : (
@@ -175,7 +173,7 @@ const Products = () => {
                   />
                   <CardContent className="p-4">
                     <p className="text-lg font-semibold">{product.name}</p>
-                    <p className="text-sm text-gray-600">Price: {product.price}</p>
+                    <p className="text-sm text-gray-600">Price: {product.price.startsWith('NRS')?product.price:`NRS ${product.price}`}</p>
                     <p className="text-sm text-gray-600">
                       Quantity: {product.quantity.toLowerCase().endsWith('kg') ? product.quantity : `${product.quantity}kg`}
                     </p>
