@@ -12,6 +12,7 @@ import { productSchema, ProductFormValues } from '@/zod_schema/schema'
 import { UseUserAddProducts } from '@/hooks/useAddProducts';
 import { addToast } from '@/lib/store/slices/toastSlice';
 import { useDispatch } from 'react-redux';
+import Spinner from '@/app/components/Loader';
 const AddProducts = () => {
   const dispatch = useDispatch();
   const form = useForm<ProductFormValues>({
@@ -109,8 +110,8 @@ const AddProducts = () => {
               )}
             </div>
 
-            <Button type="submit" className="w-full mt-4">
-              Add Product
+            <Button type="submit" variant={'ghost'} className="w-full mt-4 cursor-pointer bg-green-400 ">
+              {addProductMutation.isPending?<Spinner/>:"Add Product"}
             </Button>
           </CardContent>
         </Card>

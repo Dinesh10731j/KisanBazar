@@ -8,4 +8,5 @@ export const Endpoints = {
   getProducts: `${BASE_URL}/api/v1/farmers/get-products`,
   deleteProduct: `${BASE_URL}/api/v1/farmers/delete-product`,
   updateProduct: `${BASE_URL}/api/v1/farmers/update-product`,
+  updateProfile: `${BASE_URL}/api/v1/farmers/update-profile`,
 };
