@@ -20,19 +20,19 @@ const Cart = () => {
   const paymentMutation = UseUserPayment();
 
   const totalPrice = cartItems.reduce((acc, item) => {
-    const numericPrice = parseInt(String(item.product_Price)?.replace(/[^\d]/g, ''), 10);
+    const numericPrice = parseInt(String(item.price)?.replace(/[^\d]/g, ''), 10);
     return acc + numericPrice * item.quantity;
   }, 0);
 
-  const handleRemove = (id: number) => {
+  const handleRemove = (id: string) => {
     dispatch({ type: 'cart/removeCart', payload: id });
   };
 
-  const handleIncrease = (id: number) => {
+  const handleIncrease = (id: string) => {
     dispatch({ type: 'cart/increaseQuantity', payload: id });
   };
 
-  const handleDecrease = (id: number) => {
+  const handleDecrease = (id: string) => {
     dispatch({ type: 'cart/decreaseQuantity', payload: id });
   };
 
@@ -44,11 +44,11 @@ const Cart = () => {
 
     const formValues: PaymentFormValues = {
       customerName: '6810b62e87201f91a314be4b', 
-      productIds: cartItems.map((item) => item.id.toString()),
+      productIds: cartItems.map((item) => item._id.toString()),
       amount: totalPrice,
       products: cartItems.map((item) => ({
-        name: item.product_Name,
-        price: item.product_Price,
+        name: item.name,
+        price: item.price,
         quantity: item.quantity,
       })),
       orderId: [uuidv4()],
@@ -77,31 +77,31 @@ const Cart = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2 space-y-4">
             {cartItems.map((item) => (
-              <Card key={item.id} className="flex flex-col sm:flex-row items-center justify-between p-4">
+              <Card key={item._id} className="flex flex-col sm:flex-row items-center justify-between p-4">
                 <div className="flex items-center gap-4 w-full">
                   <Image
-                    src={item.product_Image}
-                    alt={item.product_Name}
-                    width={80}
-                    height={80}
+                    src={item.imageUrl}
+                    alt={item.name}
+                    width={200}
+                    height={200}
                     className="rounded-md object-cover"
                   />
                   <div className="flex-1">
-                    <h2 className="font-semibold text-lg">{item.product_Name}</h2>
-                    <p className="text-green-600">{item.product_Price}</p>
+                    <h2 className="font-semibold text-lg">{item.name}</h2>
+                    <p className="text-green-600">NPR {item.price}</p>
 
                     <div className="flex items-center gap-2 mt-2">
-                      <Button size="icon" variant="outline" onClick={() => handleDecrease(item.id)}>
+                      <Button size="icon" variant="outline" onClick={() => handleDecrease(item._id)}>
                         <Minus className="w-4 h-4" />
                       </Button>
                       <span className="w-6 text-center">{item.quantity}</span>
-                      <Button size="icon" variant="outline" onClick={() => handleIncrease(item.id)}>
+                      <Button size="icon" variant="outline" onClick={() => handleIncrease(item._id)}>
                         <Plus className="w-4 h-4" />
                       </Button>
                     </div>
                   </div>
                 </div>
-                <Button variant="ghost" onClick={() => handleRemove(item.id)}>
+                <Button variant="ghost" onClick={() => handleRemove(item._id)}>
                   <Trash2 className="w-5 h-5 text-red-500" />
                 </Button>
               </Card>

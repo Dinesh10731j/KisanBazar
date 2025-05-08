@@ -15,7 +15,7 @@ const usegetProducts = async () => {
 }
 
 export const UsegetProducts = () => {
-    return useQuery<getProductsResponseType,Error,string>({
+    return useQuery<getProductsResponseType,Error>({
         queryKey: ["getProducts"],
         queryFn: usegetProducts,
         staleTime: 1000 * 60 * 5,

@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { products } from "@/utils/dummyData";
 import Image from "next/image";
 import Header from "@/app/components/header";
 import Footer from "@/app/components/footer";
@@ -9,21 +8,24 @@ import { Input } from "@/components/ui/input";
 import { Grid3X3, List, XCircle } from "lucide-react"; 
 import { useDispatch} from "react-redux";
 import { addToCart } from "@/lib/store/slices/cartSlice";
-import { CartItems } from "@/utils/types";
+import {getProductsResponse} from "@/utils/types";
+import { UsegetProducts } from "@/hooks/useGetAllProducts";
+
 
 const Products = () => {
   const [layout, setLayout] = useState("grid");
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
+  const {data:products=[]} = UsegetProducts()
 
   const filteredProducts = products.filter((product) =>
-    product.product_Name.toLowerCase().includes(search.toLowerCase())
+    product.name.toLowerCase().includes(search.toLowerCase())
   );
 
 
-  const handleAddToCart = (items:CartItems)=>{
+  const handleAddToCart = (items:getProductsResponse)=>{
 
-    dispatch(addToCart(items));
+    dispatch(addToCart({...items,quantity:1}));
 
   }
 
@@ -71,22 +73,22 @@ const Products = () => {
                   : "space-y-7 space-x-5"
               }`}
             >
-              {filteredProducts.map((product:CartItems) => (
+              {filteredProducts.map((product:getProductsResponse) => (
                 <div
-                  key={product.product_Price}
+                  key={product.name}
                   className="bg-white shadow rounded-2xl p-4 flex flex-col md:flex-row items-center transition hover:shadow-lg"
                 >
                   <Image
-                    src={product.product_Image}
-                    alt={product.product_Name}
+                    src={product.imageUrl}
+                    alt={product.name}
                     width={layout === "grid" ? 300 : 120}
                     height={layout === "grid" ? 300 : 120}
                     className="object-contain rounded-md"
                   />
                   <div className="mt-4 md:mt-0 md:ml-6 w-full">
-                    <h2 className="text-xl font-semibold text-gray-800">{product.product_Name}</h2>
-                    <p className="text-green-700 font-medium">NPR {product.product_Price}</p>
-                    <p className="text-sm text-gray-600 my-2">{product.product_Description}</p>
+                    <h2 className="text-xl font-semibold text-gray-800">{product.name}</h2>
+                    <p className="text-green-700 font-medium">NPR {product.price}</p>
+                    <p className="text-sm text-gray-600 my-2">{product.description}</p>
                     <Button className="mt-2 bg-green-700 cursor-pointer hover:bg-green-800 text-white" 
                     onClick={()=>handleAddToCart(product)}
                     >

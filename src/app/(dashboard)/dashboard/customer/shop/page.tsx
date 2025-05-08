@@ -3,17 +3,17 @@
 import React from 'react';
 import { addToCart } from '@/lib/store/slices/cartSlice';
 import { useDispatch } from 'react-redux';
-import { products } from '@/utils/dummyData';
-import { Product } from '@/utils/types';
+import { getProductsResponse } from '@/utils/types';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-
+import { UsegetProducts } from '@/hooks/useGetAllProducts';
 
 const Shop: React.FC = () => {
+  const {data:products=[]} = UsegetProducts()
   const dispatch = useDispatch();
-  const handleAddToCart = (product: Product) => {
-    dispatch(addToCart(product));
-    alert(`Product added to cart successfully ${product.product_Name}`);
+  const handleAddToCart = (product: getProductsResponse) => {
+    dispatch(addToCart({...product,quantity:1}));
+    alert(`Product added to cart successfully ${product.name}`);
   };
 
 
@@ -24,14 +24,16 @@ const Shop: React.FC = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map((product) => (
-          <div key={product.id} className="bg-white rounded-xl shadow-md p-4">
+          <div key={product._id} className="bg-white rounded-xl shadow-md p-4">
             <Image
-              src={product.product_Image}
-              alt={product.product_Name}
+            width={200}
+            height={200}
+              src={product.imageUrl}
+              alt={product.name}
               className="w-full h-40 object-cover rounded-md mb-4"
             />
-            <h2 className="text-lg font-semibold text-gray-800">{product.product_Name}</h2>
-            <p className="text-green-600">NPR.{product.product_Price}</p>
+            <h2 className="text-lg font-semibold text-gray-800">{product.name}</h2>
+            <p className="text-green-600">NPR.{product.price}</p>
             <Button
               variant={'ghost'}
               onClick={() => handleAddToCart(product)}
