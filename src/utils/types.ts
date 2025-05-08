@@ -67,7 +67,7 @@ export interface PaymentFormValues {
   productIds: string[];
   products: {
     name: string;
-    price: number;
+    price: string;
     quantity: number;
   }[];
   amount: number;
@@ -101,7 +101,7 @@ export type getProductsResponse = {
   _id: string;
   name: string;
   price: string;
-  quantity: string;
+  quantity: number;
   description: string;
   imageUrl: string;
   farmerId: string;

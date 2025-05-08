@@ -21,17 +21,20 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { products, customerReviews } from "@/utils/dummyData";
-import { CartItems } from "@/utils/types";
+import { customerReviews } from "@/utils/dummyData";
 import {useAppDispatch} from '@/lib/hooks'
 import {addToCart} from "@/lib/store/slices/cartSlice";
-
+import { UsegetProducts } from "@/hooks/useGetAllProducts";
+import { getProductsResponse } from "@/utils/types";
 const Home = () => {
 
+  const product = UsegetProducts();
+  const { data: products=[] } = product;
   const dispatch = useAppDispatch()
 
-  const handleAddToCart = (product:CartItems)=>{
-    dispatch(addToCart(product))
+  const handleAddToCart = (product:getProductsResponse)=>{
+    dispatch(addToCart({ ...product, quantity: 1 }));
+
   }
   return (
     <>
@@ -107,27 +110,27 @@ const Home = () => {
           </h2>
           <Carousel className="relative">
             <CarouselContent className="-ml-2 md:-ml-4">
-              {products.map((product, index) => (
+              {products.map((product:getProductsResponse) => (
                 <CarouselItem
-                  key={index}
+                  key={product._id}
                   className="pl-2 md:pl-4 basis-1/1 sm:basis-1/2 md:basis-1/3"
                 >
                   <div className="p-6 bg-white rounded-lg shadow-md flex flex-col items-center text-center">
                     <Image
-                      src={product.product_Image}
-                      alt={product.product_Name}
+                      src={product.imageUrl}
+                      alt={product.name}
                       width={150}
                       height={150}
                       className="rounded-md"
                     />
                     <h3 className="text-xl font-semibold mt-4 text-pink-600">
-                      {product.product_Name}
+                      {product.name}
                     </h3>
                     <p className="text-gray-600 text-sm mt-2">
-                      {product.product_Description}
+                      {product.description}
                     </p>
                     <p className="text-lg font-bold text-[#E65100] mt-2">
-                      Rs. {product.product_Price}
+                      Rs. {product.price}
                     </p>
                     <Button className="mt-4 bg-[#FB8C00] cursor-pointer hover:bg-[#E65100] text-white px-4 py-2 rounded-lg"
                     onClick={()=>handleAddToCart(product)}

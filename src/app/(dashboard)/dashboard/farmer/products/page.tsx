@@ -37,7 +37,7 @@ const Products = () => {
     setFormData({
       name: product.name,
       price: product.price.toString(),
-      quantity: product.quantity,
+      quantity: product.quantity.toString(),
       description:product.description ?? '',
       
     });
@@ -175,7 +175,7 @@ const Products = () => {
                     <p className="text-lg font-semibold">{product.name}</p>
                     <p className="text-sm text-gray-600">Price: {product.price.startsWith('NRS')?product.price:`NRS ${product.price}`}</p>
                     <p className="text-sm text-gray-600">
-                      Quantity: {product.quantity.toLowerCase().endsWith('kg') ? product.quantity : `${product.quantity}kg`}
+                      Quantity: {`${product.quantity}`}
                     </p>
                     <p className="text-sm text-gray-600">
                       Description: {product.description ?? 'No description available'}

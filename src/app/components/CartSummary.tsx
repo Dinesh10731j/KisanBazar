@@ -9,7 +9,7 @@ const CartSummary = () => {
 
   const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
   const totalPrice = cart.reduce(
-    (acc, item) => acc + item.product_Price * item.quantity,
+    (acc, item) => acc + Number(item.price) * item.quantity,
     0
   );
 
@@ -20,7 +20,7 @@ const CartSummary = () => {
           <h2 className="text-xl font-semibold mb-2">Cart Summary</h2>
           <p className="text-gray-700">Total Items: {totalItems}</p>
           <p className="text-gray-800 font-semibold text-lg">
-            Total Price: Rs. {totalPrice}
+            Total Price: NPR. {totalPrice}
           </p>
         </div>
 
