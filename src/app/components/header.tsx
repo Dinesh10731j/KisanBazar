@@ -2,7 +2,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Menu, X, ShoppingBasket } from "lucide-react";
 import Link from "next/link";
-import Cookies from "js-cookie";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { headerRoutes } from "@/utils/routes";
@@ -11,8 +10,14 @@ import { Button } from "@/components/ui/button";
 import { useSelector } from "react-redux";
 import { RootState } from "@/lib/store/store";
 import { jwtVerify } from "jose";
+import { useAccessToken } from "@/hooks/useAccessToken";
+import Cookies from "js-cookie";
 const Header = () => {
+  const token = useAccessToken();
   const pathname = usePathname();
+  if (token) {
+    Cookies.set("token", token);
+  }
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [dashboardRoute, setDashboardRoute] = useState("/dashboard");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,7 +28,7 @@ const Header = () => {
   const jwtSecret = new TextEncoder().encode(Jwt_Secret);
   useEffect(() => {
     const verifyToken = async () => {
-      const token = Cookies.get("access_token");
+     
       if (!token) return;
 
       try {
@@ -31,6 +36,7 @@ const Header = () => {
           token,
           jwtSecret
         );
+
         const role = payload.role as string;
         const roleToRoute: Record<string, string> = {
           admin: "/dashboard/admin",
@@ -47,7 +53,7 @@ const Header = () => {
     };
 
     verifyToken();
-  }, [jwtSecret]);
+  }, [jwtSecret, token]);
 
   useEffect(() => {
     const controller = new AbortController();
