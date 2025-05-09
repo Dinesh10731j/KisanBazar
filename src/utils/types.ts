@@ -62,6 +62,8 @@ export interface Order {
 }
 
 
+
+
 export interface PaymentFormValues {
   customerName: string;
   productIds: string[];
@@ -137,6 +139,17 @@ export interface updateProfileResponse {
   message: string;
   error: string;
 }
+
+export interface SalesOverviewResponse {
+  _id: string;
+  farmerName: string;
+  productName: string;
+  totalPrice: number;
+  totalQuantity: number;
+  date: string; 
+}
+
+export type SalesOverview = SalesOverviewResponse[];
 
 
 
