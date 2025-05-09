@@ -10,4 +10,5 @@ export const Endpoints = {
   updateProduct: `${BASE_URL}/api/v1/farmers/update-product`,
   updateProfile: `${BASE_URL}/api/v1/farmers/update-profile`,
   products: `${BASE_URL}/api/v1/farmers/products`,
+  farmerSalesOverview :`${BASE_URL}/api/v1/farmers/sales-overview`,
 };

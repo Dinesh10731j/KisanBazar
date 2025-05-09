@@ -6,41 +6,24 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Input } from '@/components/ui/input';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { Search, Filter } from 'lucide-react';
-
-const mockSalesData = [
-  {
-    id: 1,
-    product: 'Organic Tomatoes',
-    quantity: '10kg',
-    amount: 2500,
-    date: '2025-04-15',
-  },
-  {
-    id: 2,
-    product: 'Red Onions',
-    quantity: '5kg',
-    amount: 1000,
-    date: '2025-04-14',
-  },
-  {
-    id: 3,
-    product: 'Fresh Apples',
-    quantity: '7kg',
-    amount: 2100,
-    date: '2025-04-10',
-  },
-];
+import { UseSalesOverView } from '@/hooks/useFarmerSalesOverview';
+import { SalesOverviewResponse } from '@/utils/types';
 
 const Sales = () => {
+  const {data:salesData=[],} = UseSalesOverView();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filterAmount, setFilterAmount] = useState('');
 
-  const filteredSales = mockSalesData.filter((sale) => {
-    const matchesSearch = sale.product.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesAmount = filterAmount ? sale.amount >= parseInt(filterAmount) : true;
+
+  const filteredSales = salesData.filter((sale:SalesOverviewResponse) => {
+    const matchesSearch = sale.productName.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesAmount = filterAmount ? sale.totalPrice >= parseInt(filterAmount) : true;
     return matchesSearch && matchesAmount;
   });
 
+
+  console.log("This is filtereData",filteredSales);
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <h1 className="text-2xl font-bold mb-6 flex items-center gap-2">
@@ -79,12 +62,12 @@ const Sales = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredSales.map((sale) => (
-                <TableRow key={sale.id}>
-                  <TableCell>{sale.product}</TableCell>
-                  <TableCell>{sale.quantity}</TableCell>
-                  <TableCell>NPR {sale.amount}</TableCell>
-                  <TableCell>{sale.date}</TableCell>
+              {filteredSales.map((sale:SalesOverviewResponse) => (
+                <TableRow key={sale._id}>
+                  <TableCell>{sale.productName}</TableCell>
+                  <TableCell>{sale.totalQuantity}kg</TableCell>
+                  <TableCell>NPR {sale.totalPrice}</TableCell>
+                  <TableCell>{new Date(sale.date).toLocaleDateString()}</TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -97,10 +80,10 @@ const Sales = () => {
         <CardContent className="p-4 h-[300px]">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={filteredSales}>
-              <XAxis dataKey="product" />
+              <XAxis dataKey="productName" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="amount" fill="#22c55e" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="totalPrice" fill="#22c55e" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
