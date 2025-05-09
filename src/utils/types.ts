@@ -65,6 +65,7 @@ export interface Order {
 export interface PaymentFormValues {
   customerName: string;
   productIds: string[];
+  farmerIds:string[];
   products: {
     name: string;
     price: string;

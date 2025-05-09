@@ -44,6 +44,7 @@ const Cart = () => {
 
     const formValues: PaymentFormValues = {
       customerName: '6810b62e87201f91a314be4b', 
+      farmerIds:cartItems.map((item)=>item.farmerId.toString()),
       productIds: cartItems.map((item) => item._id.toString()),
       amount: totalPrice,
       products: cartItems.map((item) => ({
@@ -54,6 +55,8 @@ const Cart = () => {
       orderId: [uuidv4()],
       paymentMethod,
     };
+
+    console.log("This is farmerIds",formValues)
 
 
     paymentMutation.mutate(formValues, {
