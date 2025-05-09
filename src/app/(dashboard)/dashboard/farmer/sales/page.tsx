@@ -21,9 +21,6 @@ const Sales = () => {
     const matchesAmount = filterAmount ? sale.totalPrice >= parseInt(filterAmount) : true;
     return matchesSearch && matchesAmount;
   });
-
-
-  console.log("This is filtereData",filteredSales);
   return (
     <div className="p-4 max-w-5xl mx-auto">
       <h1 className="text-2xl font-bold mb-6 flex items-center gap-2">

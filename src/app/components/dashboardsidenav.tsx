@@ -41,7 +41,7 @@ const DashboardSidenav: React.FC<SidebarProps> = ({ role }) => {
       <div
         ref={clickOutSideRef}
         className={`${isOpen ? "w-64" : "w-20"
-          } bg-[#1E88E5] text-gray-100 min-h-screen transition-all duration-300`}
+          } bg-gradient-to-r from-[#ff8a00] to-[#e52e71] text-gray-100 min-h-screen transition-all duration-300`}
 
       >
 

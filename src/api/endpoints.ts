@@ -11,4 +11,5 @@ export const Endpoints = {
   updateProfile: `${BASE_URL}/api/v1/farmers/update-profile`,
   products: `${BASE_URL}/api/v1/farmers/products`,
   farmerSalesOverview :`${BASE_URL}/api/v1/farmers/sales-overview`,
+  farmerDashboard :`${BASE_URL}/api/v1/farmers/dashboard`
 };
