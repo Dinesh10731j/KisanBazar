@@ -152,6 +152,25 @@ export interface SalesOverviewResponse {
 export type SalesOverview = SalesOverviewResponse[];
 
 
+export interface FarmerDashboardResponse {
+  totalProducts: number;
+  totalSales: number;
+  pendingOrders: number;
+  salesOverview: {
+    day: number;   // 1 (Sunday) to 7 (Saturday) — as per MongoDB's $dayOfWeek
+    total: number;
+  }[];
+  products: {
+    name: string;
+    price: string;
+    quantity: string;
+    status?: string; // Optional, if you have a 'status' field like "available", "out of stock", etc.
+    _id: string;
+  }[];
+}
+
+
+
 
 
 

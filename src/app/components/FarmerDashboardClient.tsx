@@ -1,24 +1,66 @@
 'use client';
+
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
 } from '@/components/ui/select';
-import { Search, Filter, PackageCheck, PackagePlus, PackageX } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
-import { salesData ,salesProducts,statusData,COLORS} from '@/utils/dummyData';
+import {
+  Search,
+  Filter,
+  PackageCheck,
+  PackagePlus,
+  PackageX,
+} from 'lucide-react';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from 'recharts';
+import { UseFarmerDashBoard } from '@/hooks/useFarmerDashboard';
+
+interface Product {
+  name: string;
+  price: number | string;
+  quantity: number | string;
+  status: 'Success' | 'Pending';
+}
 
 const FarmerDashboardClient = () => {
+  const { data: details } = UseFarmerDashBoard();
+
+
+  const statusCounts = details?.products?.reduce(
+    (acc: { success: number; pending: number }, product: Product) => {
+      if (product.status === 'Success') acc.success += 1;
+      else if (product.status === 'Pending') acc.pending += 1;
+      return acc;
+    },
+    { success: 0, pending: 0 }
+  ) || { success: 0, pending: 0 };
+
+  const statusData = [
+    { name: 'Listed', value: statusCounts.success },
+    { name: 'Pending', value: statusCounts.pending },
+  ];
+
+  const COLORS = ['#00C49F', '#FF8042'];
+
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('All');
 
-  const filteredProducts = salesProducts.filter(product => {
+  const filteredProducts = (details?.products || []).filter((product: Product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesFilter = filterStatus === 'All' || product.status === filterStatus;
     return matchesSearch && matchesFilter;
@@ -34,7 +76,7 @@ const FarmerDashboardClient = () => {
             <PackageCheck className="text-green-600" />
             <div>
               <p className="text-gray-500">Total Products</p>
-              <p className="text-xl font-bold">{salesProducts.length}</p>
+              <p className="text-xl font-bold">{details?.totalProducts ?? 0}</p>
             </div>
           </CardContent>
         </Card>
@@ -44,7 +86,7 @@ const FarmerDashboardClient = () => {
             <PackagePlus className="text-blue-600" />
             <div>
               <p className="text-gray-500">Total Sales</p>
-              <p className="text-xl font-bold">Rs. 12,500</p>
+              <p className="text-xl font-bold">{details?.totalSales ?? 0}</p>
             </div>
           </CardContent>
         </Card>
@@ -54,7 +96,7 @@ const FarmerDashboardClient = () => {
             <PackageX className="text-yellow-600" />
             <div>
               <p className="text-gray-500">Pending Orders</p>
-              <p className="text-xl font-bold">4</p>
+              <p className="text-xl font-bold">{details?.pendingOrders ?? 0}</p>
             </div>
           </CardContent>
         </Card>
@@ -64,11 +106,16 @@ const FarmerDashboardClient = () => {
         <Card className="p-4 shadow-md">
           <h3 className="text-lg font-semibold mb-4">Sales Overview</h3>
           <ResponsiveContainer width="100%" height={200}>
-            <LineChart data={salesData}>
-              <XAxis dataKey="name" />
+            <LineChart data={details?.salesOverview || []}>
+              <XAxis dataKey="day" />
               <YAxis />
               <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#8884d8" strokeWidth={2} />
+              <Line
+                type="monotone"
+                dataKey="total"
+                stroke="#8884d8"
+                strokeWidth={2}
+              />
             </LineChart>
           </ResponsiveContainer>
         </Card>
@@ -77,9 +124,20 @@ const FarmerDashboardClient = () => {
           <h3 className="text-lg font-semibold mb-4">Product Status</h3>
           <ResponsiveContainer width="100%" height={200}>
             <PieChart>
-              <Pie data={statusData} cx="50%" cy="50%" label outerRadius={60} fill="#8884d8" dataKey="value">
+              <Pie
+                data={statusData}
+                cx="50%"
+                cy="50%"
+                label
+                outerRadius={60}
+                fill="#8884d8"
+                dataKey="value"
+              >
                 {statusData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip />
@@ -107,7 +165,7 @@ const FarmerDashboardClient = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="All">All</SelectItem>
-              <SelectItem value="Listed">Listed</SelectItem>
+              <SelectItem value="Success">Success</SelectItem>
               <SelectItem value="Pending">Pending</SelectItem>
             </SelectContent>
           </Select>
@@ -116,19 +174,28 @@ const FarmerDashboardClient = () => {
 
       <h2 className="text-xl font-semibold mb-4">My Products</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredProducts.map((product) => (
-          <Card key={product.id} className="rounded-2xl shadow-md">
+        {filteredProducts.map((product:Product, index:number) => (
+          <Card key={index} className="rounded-2xl shadow-md">
             <CardContent className="p-4">
               <p className="text-lg font-semibold">{product.name}</p>
               <p className="text-sm text-gray-600">Price: {product.price}</p>
               <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
-              <p className={`text-sm mt-2 font-medium ${product.status === 'Listed' ? 'text-green-600' : 'text-yellow-600'}`}>Status: {product.status}</p>
-              <Button className="mt-3 w-full">Edit Product</Button>
+              <p
+                className={`text-sm mt-2 font-medium ${
+                  product.status === 'Success'
+                    ? 'text-green-600'
+                    : 'text-yellow-600'
+                }`}
+              >
+                Status: {product.status}
+              </p>
             </CardContent>
           </Card>
         ))}
         {filteredProducts.length === 0 && (
-          <p className="text-center text-gray-500 col-span-full">No products found.</p>
+          <p className="text-center text-gray-500 col-span-full">
+            No products found.
+          </p>
         )}
       </div>
     </div>
