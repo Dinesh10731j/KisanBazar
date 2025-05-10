@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
+import Image from 'next/image';
 import {
   Select,
   SelectContent,
@@ -35,6 +36,7 @@ interface Product {
   price: number | string;
   quantity: number | string;
   status: 'Success' | 'Pending';
+  imageUrl:string
 }
 
 const FarmerDashboardClient = () => {
@@ -177,6 +179,7 @@ const FarmerDashboardClient = () => {
         {filteredProducts.map((product:Product, index:number) => (
           <Card key={index} className="rounded-2xl shadow-md">
             <CardContent className="p-4">
+              <Image src={product.imageUrl} alt={product.name} height={100} width={100} className='h-48 w-96 object-cover '/>
               <p className="text-lg font-semibold">{product.name}</p>
               <p className="text-sm text-gray-600">Price: {product.price}</p>
               <p className="text-sm text-gray-600">Quantity: {product.quantity}</p>
