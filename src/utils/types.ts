@@ -157,16 +157,53 @@ export interface FarmerDashboardResponse {
   totalSales: number;
   pendingOrders: number;
   salesOverview: {
-    day: number;   // 1 (Sunday) to 7 (Saturday) — as per MongoDB's $dayOfWeek
+    day: number;   
     total: number;
   }[];
   products: {
     name: string;
     price: string;
     quantity: string;
-    status?: string; // Optional, if you have a 'status' field like "available", "out of stock", etc.
+    status?: string; 
     _id: string;
   }[];
+}
+
+//AdminDashBoard Response
+
+
+export interface DashboardResponse {
+  totalFarmers: number;
+  totalOrders: number;
+  deliveredOrders: number;
+  revenue: number;
+  totalCustomers: number;
+  totalProducts: number;
+  ordersOverTime: OrderOverTime[];
+}
+
+export interface OrderOverTime {
+  date: string; // e.g., "2025-05-10"
+  orders: Order[];
+}
+
+export interface Order {
+  _id: string;
+  customerName: string;
+  productIds: string[];
+  farmerIds: string[];
+  products: Product[];
+  amount: string;
+  paymentMethod: string;
+  paymentStatus: string;
+  createdAt: string; // ISO string
+}
+
+export interface Product {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
 }
 
 
