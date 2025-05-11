@@ -3,39 +3,39 @@ import tomatoImage from "../../public/assets/images/fresh-red-tomatoes.jpg";
 import onionImage from "../../public/assets/images/onion.jpg";
 import spinachImage from "../../public/assets/images/spinach.jpg";
 import {UserCircle} from "lucide-react"
-import { Product } from "./types";
-export const products:Product[] = [
-  {
-    id:1,
-    product_Name: "Tomato",
-    product_Image: tomatoImage,
-    product_Price: 20,
-    product_Description: "Fresh and juicy tomatoes from local farms.",
-    quantity:1,
+//import { Product } from "./types";
+// export const products:Product[] = [
+//   {
+//     id:1,
+//     product_Name: "Tomato",
+//     product_Image: tomatoImage,
+//     product_Price: 20,
+//     product_Description: "Fresh and juicy tomatoes from local farms.",
+//     quantity:1,
 
-  },
+//   },
  
-    {
-      id:2,
-        product_Name: "Onion",
-        product_Image: onionImage,
-        product_Price: 10,
-        product_Description: "Fresh onions with a rich flavor, perfect for cooking.",
-        quantity:1,
-    },
+//     {
+//       id:2,
+//         product_Name: "Onion",
+//         product_Image: onionImage,
+//         product_Price: 10,
+//         product_Description: "Fresh onions with a rich flavor, perfect for cooking.",
+//         quantity:1,
+//     },
  
-    {
-      id:3,
-        product_Name: "Spinach",
-        product_Image: spinachImage,
-        product_Price: 22,
-        product_Description: "Organic spinach, rich in iron and vitamins.",
-        quantity:1
-    },
+//     {
+//       id:3,
+//         product_Name: "Spinach",
+//         product_Image: spinachImage,
+//         product_Price: 22,
+//         product_Description: "Organic spinach, rich in iron and vitamins.",
+//         quantity:1
+//     },
     
  
 
-  ];
+//   ];
 
 
 
