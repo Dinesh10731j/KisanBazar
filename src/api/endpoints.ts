@@ -12,5 +12,6 @@ export const Endpoints = {
   products: `${BASE_URL}/api/v1/farmers/products`,
   farmerSalesOverview :`${BASE_URL}/api/v1/farmers/sales-overview`,
   farmerDashboard :`${BASE_URL}/api/v1/farmers/dashboard`,
-  adminDashboard : `${BASE_URL}/api/v1/admin/dashboard`
+  adminDashboard : `${BASE_URL}/api/v1/admin/dashboard`,
+  adminOverView: `${BASE_URL}/api/v1/admin/overview`
 };

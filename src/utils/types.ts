@@ -207,6 +207,21 @@ export interface Product {
 }
 
 
+export interface ordersOverTime{
+  date:string,
+  orderCount:number
+}
+
+
+export interface overViewResponse{
+  
+  totalOrders: number,
+  percentChange: string,
+  ordersOverTime: ordersOverTime[]
+
+}
+
+
 
 
 

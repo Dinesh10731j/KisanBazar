@@ -22,13 +22,20 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  orderTrendData,
   categoryDistributionData,
 } from "@/utils/dummyData";
+import { UseAdminOverView } from "@/hooks/useOverView";
+import Spinner from "@/app/components/Loader";
 
 const COLORS = ["#34d399", "#60a5fa", "#fbbf24", "#f87171", "#a78bfa"];
 
 const OverView = () => {
+
+  const { data: overView, isLoading, isError } = UseAdminOverView();
+
+  if (isLoading || !overView) return <div className="flex flex-col items-center justify-center h-screen"><Spinner /></div>
+  if (isError) return <div className="flex flex-col text-red-500 items-center justify-center h-screen">Error fetching data</div>
+
   return (
     <div className="p-4 md:p-6 lg:p-10 grid gap-6 md:grid-cols-2">
       {/* Total Orders */}
@@ -39,8 +46,8 @@ const OverView = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-3xl font-bold">450</p>
-          <p className="text-sm text-muted-foreground">+15% from last week</p>
+          <p className="text-3xl font-bold">{overView?.totalOrders}</p>
+          <p className="text-sm text-muted-foreground">{overView?.percentChange} from last week</p>
         </CardContent>
       </Card>
 
@@ -52,12 +59,12 @@ const OverView = () => {
         <CardContent>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={orderTrendData} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
+              <LineChart data={overView?.ordersOverTime} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="date" />
                 <YAxis />
                 <Tooltip />
-                <Line type="monotone" dataKey="orders" stroke="#34d399" strokeWidth={2} />
+                <Line type="monotone" dataKey="orderCount" stroke="#34d399" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
           </div>
