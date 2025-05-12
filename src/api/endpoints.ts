@@ -13,5 +13,8 @@ export const Endpoints = {
   farmerSalesOverview :`${BASE_URL}/api/v1/farmers/sales-overview`,
   farmerDashboard :`${BASE_URL}/api/v1/farmers/dashboard`,
   adminDashboard : `${BASE_URL}/api/v1/admin/dashboard`,
-  adminOverView: `${BASE_URL}/api/v1/admin/overview`
+  adminOverView: `${BASE_URL}/api/v1/admin/overview`,
+  adminManageUsers:`${BASE_URL}/api/v1/admin/manage-users`,
+  adminRemoverUsers:`${BASE_URL}/api/v1/admin`,
+  adminChangeRole:`${BASE_URL}/api/v1/admin`
 };
