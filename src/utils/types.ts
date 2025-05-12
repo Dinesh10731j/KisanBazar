@@ -222,6 +222,21 @@ export interface overViewResponse{
 }
 
 
+export interface User {
+  _id: string;
+  username: string;
+  email: string;
+  role: string;
+}
+
+// Full response shape
+export interface UsersResponse {
+  success: boolean;
+  users: User[];
+}
+
+
+
 
 
 
