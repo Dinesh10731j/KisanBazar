@@ -65,7 +65,7 @@ export interface Order {
 
 
 export interface PaymentFormValues {
-  customerName: string;
+  customerId: string;
   productIds: string[];
   farmerIds:string[];
   products: {
@@ -239,6 +239,22 @@ export interface UsersResponse {
 
 
 
+interface OrderProduct {
+  productName: string;
+  amount: number;
+  imageUrl: string;
+  farmerName: string;
+}
 
+// Type for each order in the response
+interface OrderResponseItem {
+  buyerName: string;
+  products: OrderProduct[];
+  totalAmount: number;
+  paymentStatus: 'Success' | 'Failed' | 'Pending';
+}
+
+// Final API response type
+export type OrdersResponse = OrderResponseItem[];
 
 
