@@ -13,11 +13,11 @@ import Spinner from '@/app/components/Loader';
 import { PaymentFormValues } from '@/utils/types';
 import { addToast } from '@/lib/store/slices/toastSlice';
 import {jwtVerify} from "jose";
-import Cookies from 'js-cookie';
+import { useAccessToken } from '@/hooks/useAccessToken';
 
 
-const getUserIdFromToken = async (): Promise<string | null> => {
-  const token = Cookies.get("token");
+const getUserIdFromToken = async (token:string): Promise<string | null> => {
+
   if (!token) return null;
 
   try {
@@ -34,6 +34,7 @@ const getUserIdFromToken = async (): Promise<string | null> => {
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const token = useAccessToken()
   const [paymentMethod, setPaymentMethod] = useState<'onCash' | 'eSewa' | 'Khalti' | ''>('');
   const cartItems = useSelector((state: RootState) => state.cart.cart);
   const paymentMutation = UseUserPayment();
@@ -60,7 +61,7 @@ const Cart = () => {
       dispatch(addToast({ message: 'Please select a payment method', type: 'error' }));
       return;
     }
-const customerId = await getUserIdFromToken();
+const customerId = await getUserIdFromToken(token as string);
   if (!customerId) {
     dispatch(addToast({ message: 'Login expired. Please login again.', type: 'error' }));
     return;

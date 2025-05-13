@@ -17,5 +17,6 @@ export const Endpoints = {
   adminManageUsers:`${BASE_URL}/api/v1/admin/manage-users`,
   adminRemoverUsers:`${BASE_URL}/api/v1/admin`,
   adminChangeRole:`${BASE_URL}/api/v1/admin`,
-  adminOrders:`${BASE_URL}/api/v1/admin/orders`
+  adminOrders:`${BASE_URL}/api/v1/admin/orders`,
+  adminSetting:`${BASE_URL}/api/v1/admin`
 };
