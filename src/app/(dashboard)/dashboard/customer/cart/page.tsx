@@ -12,11 +12,30 @@ import { UseUserPayment } from '@/hooks/usePayment';
 import Spinner from '@/app/components/Loader';
 import { PaymentFormValues } from '@/utils/types';
 import { addToast } from '@/lib/store/slices/toastSlice';
+import {jwtVerify} from "jose";
+import Cookies from 'js-cookie';
+
+
+const getUserIdFromToken = async (): Promise<string | null> => {
+  const token = Cookies.get("token");
+  if (!token) return null;
+
+  try {
+    const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
+    const { payload } = await jwtVerify(token, secret);
+    return payload.userId as string;
+  } catch (err) {
+    console.error("Invalid token:", err);
+    return null;
+  }
+};
+
+
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const [paymentMethod, setPaymentMethod] = useState<'onCash' | 'eSewa' | 'Khalti' | ''>('');
   const cartItems = useSelector((state: RootState) => state.cart.cart);
-  const dispatch = useDispatch();
   const paymentMutation = UseUserPayment();
 
   const totalPrice = cartItems.reduce((acc, item) => {
@@ -36,14 +55,18 @@ const Cart = () => {
     dispatch({ type: 'cart/decreaseQuantity', payload: id });
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (!paymentMethod) {
       dispatch(addToast({ message: 'Please select a payment method', type: 'error' }));
       return;
     }
-
+const customerId = await getUserIdFromToken();
+  if (!customerId) {
+    dispatch(addToast({ message: 'Login expired. Please login again.', type: 'error' }));
+    return;
+  }
     const formValues: PaymentFormValues = {
-      customerName: '6810b62e87201f91a314be4b', 
+      customerId ,
       farmerIds:cartItems.map((item)=>item.farmerId.toString()),
       productIds: cartItems.map((item) => item._id.toString()),
       amount: totalPrice,
@@ -56,7 +79,7 @@ const Cart = () => {
       paymentMethod,
     };
 
-    console.log("This is farmerIds",formValues)
+
 
 
     paymentMutation.mutate(formValues, {
@@ -64,7 +87,7 @@ const Cart = () => {
         if (data.paymentUrl) {
           window.location.href = data.paymentUrl;
         } else {
-          alert('Payment successful!');
+      dispatch(addToast({message:"Payment successful!",type:'success'}))
         }
       },
     });

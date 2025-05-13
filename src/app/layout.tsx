@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { TanstackQueryProvider } from "./tanstack-query-provider";
 import StoreProvider from "./StoreProvider";
 import ToastContainer from "./components/ToastContainer";
+import ProgressBarProvider from "./components/ProgressBarProvider";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -28,20 +29,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-     
+
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <StoreProvider items={[]}>
-        <TanstackQueryProvider>
-          <ToastContainer/>
-        {children}
-        </TanstackQueryProvider>
+          <TanstackQueryProvider>
+            <ToastContainer />
+<ProgressBarProvider />
+            {children}
+
+
+          </TanstackQueryProvider>
         </StoreProvider>
-       
 
         
-      
+
+
       </body>
     </html>
   );
