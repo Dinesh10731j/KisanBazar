@@ -258,3 +258,18 @@ interface OrderResponseItem {
 export type OrdersResponse = OrderResponseItem[];
 
 
+
+export interface UserDashboardResponse {
+  totalOrders: number;
+  totalSpent: number;
+  lastOrderDate: string; // ISO format date string
+  productCategoryCount: {
+    [productName: string]: number;
+  };
+  orderMonthlyCount: {
+    [monthYear: string]: number;
+  };
+}
+
+
+
