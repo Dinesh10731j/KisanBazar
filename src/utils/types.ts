@@ -272,4 +272,27 @@ export interface UserDashboardResponse {
 }
 
 
+export interface Product {
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+export interface OrderDetail {
+  orderId: string;
+  date: string; // or `Date` if you're parsing it
+  status: string;
+  amount: number;
+  paymentMethod: 'onCash' | 'eSewa' | 'Khalti';
+  products: Product[];
+}
+
+export interface OrderDetailsResponse {
+  success: boolean;
+  message: string;
+  data: OrderDetail[];
+}
+
+
+
 
