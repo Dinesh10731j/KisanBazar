@@ -19,5 +19,6 @@ export const Endpoints = {
   adminChangeRole:`${BASE_URL}/api/v1/admin`,
   adminOrders:`${BASE_URL}/api/v1/admin/orders`,
   adminSetting:`${BASE_URL}/api/v1/admin`,
-  customerDashboard:`${BASE_URL}/api/v1/users/dashboard`
+  customerDashboard:`${BASE_URL}/api/v1/users/dashboard`,
+  customerOrderDetails:`${BASE_URL}/api/v1/users/dashboard/order-details`
 };
