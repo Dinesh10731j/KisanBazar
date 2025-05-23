@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Link from 'next/link';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import { useForm } from 'react-hook-form';
@@ -7,11 +8,21 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { forgotPasswordSchema,ForgotFormValues } from '@/zod_schema/schema';
-
-
-
+import { forgotPasswordSchema, ForgotFormValues } from '@/zod_schema/schema';
+import { useForgotPassword } from '@/hooks/useForgotPassword';
+import Spinner from '../components/Loader';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
+import { addToast } from '@/lib/store/slices/toastSlice';
 const ForgotPassword = () => {
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { mutate: forgotPassword, isPending, isSuccess } = useForgotPassword();
+
+  if (isSuccess) {
+    router.push('/login');
+  }
   const {
     register,
     handleSubmit,
@@ -21,7 +32,21 @@ const ForgotPassword = () => {
   });
 
   const onSubmit = (data: ForgotFormValues) => {
-    console.log('Sending reset link to:', data.email);
+    forgotPassword(data.email, {
+      onSuccess: () => {
+        dispatch(addToast({
+          type: 'success',
+          message: 'Password reset link sent to your email.',
+        }));
+
+
+      }, onError: (error) => {
+        dispatch(addToast({
+          type: 'error',
+          message: error.message,
+        }));
+      }
+    });
 
   };
 
@@ -40,7 +65,7 @@ const ForgotPassword = () => {
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
               <Input
-              className='bg-white text-gray-800'
+                className='bg-white text-gray-800'
                 id="email"
                 type="email"
                 placeholder="you@example.com"
@@ -54,13 +79,13 @@ const ForgotPassword = () => {
               type="submit"
               className="w-full bg-[#FB8C00] cursor-pointer hover:bg-orange-600 text-white font-semibold"
             >
-              Send Reset Link
+              {isPending ? <Spinner /> : 'Send Reset Link'}
             </Button>
           </form>
           <div className="mt-6 text-center">
-            <a href="/login" className="text-white hover:underline text-sm">
+            <Link href="/login" className="text-white hover:underline text-sm">
               Back to Login
-            </a>
+            </Link>
           </div>
         </div>
       </main>
