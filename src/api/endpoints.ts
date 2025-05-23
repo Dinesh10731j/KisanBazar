@@ -20,5 +20,6 @@ export const Endpoints = {
   adminOrders:`${BASE_URL}/api/v1/admin/orders`,
   adminSetting:`${BASE_URL}/api/v1/admin`,
   customerDashboard:`${BASE_URL}/api/v1/users/dashboard`,
-  customerOrderDetails:`${BASE_URL}/api/v1/users/dashboard/order-details`
+  customerOrderDetails:`${BASE_URL}/api/v1/users/dashboard/order-details`,
+  forgotPassword :`${BASE_URL}/api/v1/users/forgot-password`,
 };
