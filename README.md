@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌾 KisanBazaar
 
-## Getting Started
+**KisanBazaar** is an online platform that empowers farmers in Nepal by allowing them to sell their products directly to consumers, eliminating middlemen. Built with the **MERN stack** and **Next.js**, KisanBazaar ensures fair pricing, transparency, and efficient logistics for agricultural products across Nepal.
 
-First, run the development server:
+This project is currently under development by [Dinesh](https://github.com/Dinesh10731j)
+
+---
+
+## 📌 Features
+
+- 👨‍🌾 **Direct Farmer-to-Consumer Sales**
+- 🚚 **Logistics Support** – Pickup from farms and delivery to customers
+- 📦 **Product Management** – Add/edit/delete farm products
+- 💳 **Integrated Payments** – Khalti and eSewa payment support
+- 📊 **Dashboards** – Sales and order overview for farmers and customers
+- 🛒 **Customer Marketplace** – View, search, and buy fresh products
+- 🔐 **JWT Authentication** – Secure login and protected routes
+
+---
+
+## ⚙️ Tech Stack
+
+### Frontend
+- [Next.js](https://nextjs.org)
+- [React.js](https://react.dev)
+- [Tailwind CSS](https://tailwindcss.com)
+- [Recharts](https://recharts.org) – Charts and dashboards
+- [Redux Toolkit](https://redux-toolkit.js.org)
+- [TanStack Query](https://tanstack.com/query)
+
+### Backend
+- [Express.js](https://expressjs.com)
+- [MongoDB](https://www.mongodb.com)
+- [Cloudinary](https://cloudinary.com) – Image storage
+- [JWT](https://jwt.io) – Authentication
+- [Khalti API](https://docs.khalti.com)
+- [eSewa API](https://developer.esewa.com.np/)
+
+---
+
+## 🚀 Getting Started
+
+Clone the frontend repository:
 
 ```bash
+git clone https://github.com/Dinesh10731j/kisanbazar.git
+cd kisanbazar
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
