@@ -11,6 +11,7 @@ import {
   Home,
   Store,
   ShoppingBag,
+  MapPinned
 } from "lucide-react";
 
 export const headerRoutes =[
@@ -30,6 +31,8 @@ export const headerRoutes =[
       { label: "Manage Users", path: "/dashboard/admin/manage-users", icon: Users },
       { label: "Orders", path: "/dashboard/admin/orders", icon: ShoppingCart },
       { label: "Settings", path: "/dashboard/admin/settings", icon: Settings },
+      { label: "Live Location", path: "/dashboard/admin/location", icon: MapPinned }
+
     ],
     farmer: [
       { label: "Dashboard", path: "/dashboard/farmer", icon: LayoutDashboard },
@@ -37,12 +40,16 @@ export const headerRoutes =[
       { label: "Add Product", path: "/dashboard/farmer/addproducts", icon: PlusCircle },
       { label: "Sales", path: "/dashboard/farmer/sales", icon: LineChart },
       { label: "Profile", path: "/dashboard/farmer/profile", icon: User },
+      { label: "Live Location", path: "/dashboard/farmer/location", icon: MapPinned }
+
     ],
     user: [
       { label: "Home", path: "/dashboard/customer", icon: Home },
       { label: "Shop", path: "/dashboard/customer/shop", icon: Store },
       { label: "Cart", path: "/dashboard/customer/cart", icon: ShoppingBag },
       { label: "Orders", path: "/dashboard/customer/orders", icon: ShoppingCart },
+      { label: "Live Location", path: "/dashboard/customer/location", icon: MapPinned }
+
     ],
   };
   
